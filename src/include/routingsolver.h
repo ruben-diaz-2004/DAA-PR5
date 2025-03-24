@@ -12,10 +12,10 @@
 #define ROUTING_SOLVER_H
 
 #include <vector>
-#include "Zone.h"
-#include "CollectionVehicle.h"
-#include "TransferStation.h"
-#include "Depot.h"
+#include "zone.h"
+#include "collectionvehicle.h"
+#include "transferStation.h"
+#include "depot.h"
 
 class RoutingSolver {
 private:

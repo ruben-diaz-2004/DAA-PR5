@@ -15,9 +15,9 @@
 
 #include <vector>
 #include <stdexcept>
-#include "Location.h"
-#include "Task.h"
-#include "TransferStation.h"
+#include "location.h"
+#include "task.h"
+#include "transferStation.h"
 
 class TransportationVehicle {
 private:

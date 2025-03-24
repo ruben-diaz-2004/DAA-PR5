@@ -6,11 +6,11 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-#include "Location.h"
-#include "Zone.h"
-#include "TransferStation.h"
-#include "Depot.h"
-#include "Landfill.h"
+#include "location.h"
+#include "zone.h"
+#include "transferStation.h"
+#include "depot.h"
+#include "landfill.h"
 
 class ProblemInstanceParser {
 private:

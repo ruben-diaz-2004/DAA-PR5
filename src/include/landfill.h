@@ -9,7 +9,7 @@
 #ifndef LANDFILL_H
 #define LANDFILL_H
 
-#include "Location.h"
+#include "location.h"
 
 class Landfill {
 private:

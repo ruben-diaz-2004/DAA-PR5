@@ -13,8 +13,8 @@
 #define DEPOT_H
 
 #include <utility>
-#include "collectionVehicle.h"
-#include "transportationVehicle.h"
+#include "collectionvehicle.h"
+#include "transportationvehicle.h"
 #include "location.h"
 
 class Depot {

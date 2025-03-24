@@ -21,8 +21,8 @@
 #include <string>
 #include <vector>
 #include "zone.h"
-#include "collectionVehicle.h"
-#include "transportationVehicle.h"
+#include "collectionvehicle.h"
+#include "transportationvehicle.h"
 #include "transferStation.h"
 #include "depot.h"
 #include "landfill.h"
