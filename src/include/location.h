@@ -7,6 +7,7 @@
 #define LOCATION_H
 
 #include <cmath>
+#include <iostream>
 
 class Location {
 private:
@@ -25,6 +26,10 @@ public:
 
     double getX() const { return x; }
     double getY() const { return y; }
+
+    void printLocation() const {
+        std::cout << "Location(" << x << ", " << y << ")" << std::endl;
+    }
 };
 
 

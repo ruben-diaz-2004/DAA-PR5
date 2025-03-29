@@ -42,9 +42,12 @@ public:
       currentLoad += wasteAmount;
   }
 
-  void resetLoadAndTime() {
+    void subtractRemainingTime(double time) {
+        remainingTime -= time;
+    }
+
+  void resetLoad() {
       currentLoad = 0.0;
-      // Reset time or reduce based on travel
   }
 
   Location getCurrentLocation() const {
@@ -54,6 +57,7 @@ public:
   double getCurrentLoad() const { return currentLoad; }
   double getRemainingCapacity() const { return capacity - currentLoad; }
   double getRemainingTime() const { return remainingTime; }
+  std::vector<Location> getRoute() const { return route; }
 };
 
 

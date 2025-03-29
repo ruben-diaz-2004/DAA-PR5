@@ -22,8 +22,7 @@ TransferStation RoutingSolver::findClosestTransferStation(const Location& curren
 
 // Calculate travel time between two locations (simplified)
 double RoutingSolver::calculateTravelTime(const Location& from, const Location& to) const {
-    // In a real implementation, this would use actual distance and speed
-    return from.distanceTo(to);
+    return from.distanceTo(to) / problem.vehicleSpeed() * 60; // Convert to minutes
 }
 
 // Check if a vehicle can visit a zone within remaining time and capacity

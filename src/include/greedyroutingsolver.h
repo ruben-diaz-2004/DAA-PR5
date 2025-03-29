@@ -7,6 +7,9 @@
 
 
 class GreedyRoutingSolver : public RoutingSolver {
+private:
+  std::vector<CollectionVehicle> routes;
+
 public:
     // Constructor simplificado
     GreedyRoutingSolver(const ProblemInstance& problemInstance)
