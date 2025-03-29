@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include <fstream>
+#include <fstream> // Required for std::ifstream
 #include <sstream>
 #include <stdexcept>
 #include "location.h"

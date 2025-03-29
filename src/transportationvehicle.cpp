@@ -1,5 +1,5 @@
-#include "./include/transportationvehicle.h"
-#include "./include/task.h"
+#include "include/transportationvehicle.h"
+#include "include/task.h"
 #include <algorithm>
 #include <cmath>
 

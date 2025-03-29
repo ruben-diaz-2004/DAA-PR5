@@ -1,5 +1,5 @@
-#include "./include/task.h"
-#include "./include/transferStation.h"
+#include "include/task.h"
+#include "include/transferStation.h"
 
 // Default constructor
 Task::Task() : 

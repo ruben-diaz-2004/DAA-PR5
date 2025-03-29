@@ -1,4 +1,4 @@
-#include "./include/instanceparser.h"
+#include "include/instanceparser.h"
 #include <iostream>
 
 void ProblemInstanceParser::loadFromFile(const std::string& filename) {
@@ -23,6 +23,7 @@ void ProblemInstanceParser::parseHeader(std::ifstream& file) {
     std::string line;
     std::string key;
     double value;
+    bool end = false;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
@@ -38,12 +39,15 @@ void ProblemInstanceParser::parseHeader(std::ifstream& file) {
             else if (key == "num_zones") numberOfZones = static_cast<int>(value);
             else if (key == "Q1") collectionVehicleCapacity = value;
             else if (key == "Q2") transportVehicleCapacity = value;
-            else if (key == "V") vehicleSpeed = value;
+            else if (key == "V") {
+              vehicleSpeed = value; 
+              end = true;
+            }
         }
 
         // Stop parsing header when we encounter a numeric line (zone data)
-        if (std::isdigit(line[0])) {
-            file.seekg(std::streampos(file.tellg()) - line.length() - 1);
+        if (end) {
+            file.seekg(std::streampos(file.tellg()));
             break;
         }
     }
@@ -56,9 +60,6 @@ void ProblemInstanceParser::parseLocations(std::ifstream& file) {
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
-        
-        // Skip empty or comment lines
-        if (line.empty() || line[0] == '/' || line[0] == '#') continue;
 
         // Parse location lines
         if (iss >> key >> x >> y) {

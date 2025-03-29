@@ -1,51 +1,34 @@
-// RoutingSolver
-
-// Implements routing algorithms
-// Methods:
-
-// vector<CollectionVehicle> constructGreedyCollectionRoutes()
-// vector<TransportationVehicle> constructGreedyTransportRoutes()
-// vector<CollectionVehicle> applyGRASP()
-// vector<CollectionVehicle> applyGVNS()
-
+// RoutingSolver (Interface/Abstract Base Class)
 #ifndef ROUTING_SOLVER_H
 #define ROUTING_SOLVER_H
 
 #include <vector>
-#include "zone.h"
 #include "collectionvehicle.h"
-#include "transferStation.h"
-#include "depot.h"
+#include "transportationvehicle.h"
+
+class ProblemInstance;
 
 class RoutingSolver {
-private:
-    // Problem parameters
-    double vehicleCapacity;
-    double maxRouteDuration;
-    std::vector<Zone> zones;
-    std::vector<TransferStation> transferStations;
-    Depot depot;
-
-    // Helper methods
+protected:
+    // Referencia al problema
+    const ProblemInstance& problem;
+    
+    // Métodos auxiliares comunes
     TransferStation findClosestTransferStation(const Location& currentLocation) const;
     double calculateTravelTime(const Location& from, const Location& to) const;
     bool canVisitZone(const CollectionVehicle& vehicle, const Zone& zone, double remainingTime) const;
 
 public:
-    // Constructor
-    RoutingSolver(
-        double capacity, 
-        double routeDuration, 
-        const std::vector<Zone>& collectionZones,
-        const std::vector<TransferStation>& swtsStations,
-        const Depot& startDepot
-    );
+    // Constructor simplificado
+    explicit RoutingSolver(const ProblemInstance& problemInstance)
+        : problem(problemInstance) {}
+    
 
-    // Main method to construct routes
-    std::vector<CollectionVehicle> constructGreedyCollectionRoutes();
+    // Métodos puros virtuales que deben implementar las clases derivadas
+    virtual std::vector<CollectionVehicle> constructCollectionRoutes() = 0;
 
-    // Getters and additional utility methods
-    int getNumberOfZonesVisited() const;
+    // Getters y métodos adicionales
+    // int getNumberOfZonesVisited() const;
 };
 
 #endif // ROUTING_SOLVER_H

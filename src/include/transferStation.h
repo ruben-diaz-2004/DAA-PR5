@@ -19,6 +19,8 @@
 #include <utility>
 #include "location.h"
 
+class Location;
+
 class TransferStation {
 private:
   int id;
@@ -29,6 +31,7 @@ public:
   TransferStation(int stationId, const Location& loc) : id(stationId), location(loc) {}
 
   Location getLocation() const { return location; }
+  int getId() const { return id; }
 };
     
 

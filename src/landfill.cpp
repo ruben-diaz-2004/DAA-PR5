@@ -1,4 +1,4 @@
-#include "./include/landfill.h"
+#include "include/landfill.h"
 
 // Default constructor
 Landfill::Landfill() : 

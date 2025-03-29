@@ -17,6 +17,8 @@
 #include <utility>
 #include "location.h"
 
+class Location;
+
 class Zone {
 private:
   int id;

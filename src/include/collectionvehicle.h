@@ -11,12 +11,15 @@
 // void transferToTransferStation(TransferStation station)
 
 
-#ifndef COLLECTIONVEHICLE_H
-#define COLLECTIONVEHICLE_H
+#ifndef COLLECTION_VEHICLE_H
+#define COLLECTION_VEHICLE_H
 
 #include <vector>
 #include "vehicle.h"
 #include "zone.h"
+#include "location.h"
+
+class Location;
 
 class CollectionVehicle {
 private:
@@ -24,11 +27,12 @@ private:
   double capacity;
   double currentLoad = 0.0;
   double remainingTime;
+  double speed;
   std::vector<Location> route;
 
 public:
-  CollectionVehicle(int vehicleId, double vehicleCapacity, double maxTime) : 
-      id(vehicleId), capacity(vehicleCapacity), remainingTime(maxTime) {}
+  CollectionVehicle(int vehicleId, double vehicleCapacity, double maxTime, double speed) : 
+      id(vehicleId), capacity(vehicleCapacity), remainingTime(maxTime), speed(speed) {}
 
   void addLocation(const Location& loc) {
       route.push_back(loc);
