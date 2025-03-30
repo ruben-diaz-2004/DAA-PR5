@@ -64,16 +64,16 @@ void ProblemInstanceParser::parseLocations(std::ifstream& file) {
         // Parse location lines
         if (iss >> key >> x >> y) {
             if (key == "Depot") {
-                depot = Depot(Location(x, y));
+                depot = Depot(Location(x, y, -1));
             }
             else if (key == "IF") {
-                transferStations.emplace_back(TransferStation(0, Location(x, y)));
+                transferStations.emplace_back(TransferStation(0, Location(x, y, 21)));
             }
             else if (key == "IF1") {
-                transferStations.emplace_back(TransferStation(1, Location(x, y)));
+                transferStations.emplace_back(TransferStation(1, Location(x, y, 22)));
             }
             else if (key == "Dumpsite") {
-                landfill = Landfill(0, Location(x, y));
+                landfill = Landfill(0, Location(x, y, -1));
             }
 
             // Stop parsing locations when we encounter a numeric line (zone data)
@@ -89,6 +89,7 @@ void ProblemInstanceParser::parseZones(std::ifstream& file) {
     std::string line;
     int zoneId;
     double x, y, d1, d2;
+    int zoneCount = 0;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
@@ -100,7 +101,8 @@ void ProblemInstanceParser::parseZones(std::ifstream& file) {
         if (iss >> zoneId >> x >> y >> d1 >> d2) {
             // Zone demand is calculated as (D2 - D1)
             double demand = d2 - d1;
-            zones.emplace_back(Zone(zoneId, Location(x, y), demand));
+            zones.emplace_back(Zone(zoneId, Location(x, y, zoneCount), demand));
         }
+        zoneCount++;
     }
 }

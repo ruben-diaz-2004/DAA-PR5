@@ -54,6 +54,7 @@ public:
       return route.back();
   }
 
+  int getId() const { return id; }
   double getCurrentLoad() const { return currentLoad; }
   double getRemainingCapacity() const { return capacity - currentLoad; }
   double getRemainingTime() const { return remainingTime; }

@@ -10,11 +10,8 @@
 #include <iostream>
 
 class Location {
-private:
-    double x, y;
-
 public:
-    Location(double x = 0.0, double y = 0.0) : x(x), y(y) {}
+    Location(double x = 0.0, double y = 0.0, int id = 0) : x(x), y(y), id(id) {}
     
     double distanceTo(const Location& other) const {
         return std::sqrt(std::pow(x - other.x, 2) + std::pow(y - other.y, 2));
@@ -30,6 +27,14 @@ public:
     void printLocation() const {
         std::cout << "Location(" << x << ", " << y << ")" << std::endl;
     }
+
+    void printId() const {
+        std::cout << "Location ID: " << id << std::endl;
+    }
+private:
+    int id;
+    double x;
+    double y;
 };
 
 

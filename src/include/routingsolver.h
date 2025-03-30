@@ -16,7 +16,7 @@ protected:
     // Métodos auxiliares comunes
     TransferStation findClosestTransferStation(const Location& currentLocation) const;
     double calculateTravelTime(const Location& from, const Location& to) const;
-    bool canVisitZone(const CollectionVehicle& vehicle, const Zone& zone, double remainingTime) const;
+    int canVisitZone(const CollectionVehicle& vehicle, const Zone& zone, double remainingTime) const;
 
 public:
     // Constructor simplificado

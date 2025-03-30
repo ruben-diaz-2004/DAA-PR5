@@ -19,11 +19,11 @@ std::vector<CollectionVehicle> GreedyRoutingSolver::constructCollectionRoutes() 
   std::cout << "Constructing transport routes..." << std::endl;
   std::vector<CollectionVehicle> routes;
   std::vector<Zone> unassignedZones = problem.zones();
-  
+  bool timeExceeded = false;
   // Continue until all zones are assigned
   while (!unassignedZones.empty()) {
       // Create a new vehicle starting from the depot
-      CollectionVehicle currentVehicle(routes.size() + 1, problem.collectionVehicleCapacity(), problem.maxTransportRouteDuration(), problem.vehicleSpeed());
+      CollectionVehicle currentVehicle(routes.size() + 1, problem.collectionVehicleCapacity(), problem.maxCollectionRouteDuration(), problem.vehicleSpeed());
       currentVehicle.addLocation(problem.depot().getLocation());
       
       // Continue adding zones to this vehicle's route
@@ -36,21 +36,38 @@ std::vector<CollectionVehicle> GreedyRoutingSolver::constructCollectionRoutes() 
               double distance = currentVehicle.getCurrentLocation().distanceTo(zone.getLocation());
               if (distance < minDistance) {
                   // Check if zone can be visited within vehicle constraints
-                  if (canVisitZone(currentVehicle, zone, currentVehicle.getRemainingTime())) {
-                      minDistance = distance;
-                      bestZone = &zone;
+                  switch (canVisitZone(currentVehicle, zone, currentVehicle.getRemainingTime())) {
+                      case 1: // Not enough capacity
+                          std::cout << "Not enough capacity for zone " << zone.getId() << std::endl;
+                          break;
+                      case 2: // Not enough time
+                          std::cout << "Not enough time for zone " << zone.getId() << std::endl;
+                          timeExceeded = true;
+                          break;
+                      default: // Can visit zone
+                          if (distance < minDistance) {
+                              minDistance = distance;
+                              bestZone = &zone;
+                          }
+                          break;
                   }
               }
           }
-          
+
+          if (timeExceeded) {
+              std::cout << "Time exceeded for vehicle " << currentVehicle.getId() << std::endl;
+              timeExceeded = false;
+              break;
+          }
           // If no zone can be visited, move to transfer station and reset
           if (!bestZone) {
               // Find closest transfer station
               TransferStation closestStation = findClosestTransferStation(currentVehicle.getCurrentLocation());
               
               // Add transfer station to route and reset vehicle
-              std::cout << "No more zones can be visited. Moving to transfer station." << std::endl;
-              std::cout << currentVehicle.getCurrentLoad() << " kg remaining." << std::endl;
+              // std::cout << "No more zones can be visited. Moving to transfer station." << std::endl;
+              // std::cout << currentVehicle.getCurrentLoad() << " kg remaining." << std::endl;
+              currentVehicle.subtractRemainingTime(calculateTravelTime(currentVehicle.getCurrentLocation(), closestStation.getLocation()));
               currentVehicle.addLocation(closestStation.getLocation());
               currentVehicle.resetLoad();
               
@@ -72,12 +89,14 @@ std::vector<CollectionVehicle> GreedyRoutingSolver::constructCollectionRoutes() 
       
       // Add final transfer station if needed
       if (currentVehicle.getCurrentLoad() > 0) {
-          TransferStation closestStation = findClosestTransferStation(currentVehicle.getCurrentLocation());
-          currentVehicle.addLocation(closestStation.getLocation());
-          currentVehicle.resetLoad();
+        TransferStation closestStation = findClosestTransferStation(currentVehicle.getCurrentLocation());
+        currentVehicle.subtractRemainingTime(calculateTravelTime(currentVehicle.getCurrentLocation(), closestStation.getLocation()));
+        currentVehicle.addLocation(closestStation.getLocation());
+        currentVehicle.resetLoad();
       }
       
       // Return to depot
+      currentVehicle.subtractRemainingTime(calculateTravelTime(currentVehicle.getCurrentLocation(), problem.depot().getLocation()));
       currentVehicle.addLocation(problem.depot().getLocation());
       
       // Add completed route
@@ -86,14 +105,13 @@ std::vector<CollectionVehicle> GreedyRoutingSolver::constructCollectionRoutes() 
   
   // Print routes for debugging
   for (const auto& route : routes) {
-      std::cout << "Route: ";
+      std::cout << "Vehicle: " << route.getId() << std::endl;
       std::cout << "Remaining time: " << route.getRemainingTime() << " minutes, ";
-      std::cout << route.getCurrentLoad() << " kg, ";
+      std::cout << route.getCurrentLoad() << " kg, " << std::endl;
       for (const auto& loc : route.getRoute()) {
-        loc.printLocation();
         std::cout << " -> ";
+        loc.printId();
       }
-      std::cout << "Depot" << std::endl;
   }
   std::cout << "Total routes: " << routes.size() << std::endl;
   std::cout << "Greedy routing completed." << std::endl;

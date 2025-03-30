@@ -26,10 +26,10 @@ double RoutingSolver::calculateTravelTime(const Location& from, const Location& 
 }
 
 // Check if a vehicle can visit a zone within remaining time and capacity
-bool RoutingSolver::canVisitZone(const CollectionVehicle& vehicle, const Zone& zone, double remainingTime) const {
+int RoutingSolver::canVisitZone(const CollectionVehicle& vehicle, const Zone& zone, double remainingTime) const {
     // Check if zone waste fits in vehicle capacity
     if (zone.getWasteQuantity() > vehicle.getRemainingCapacity()) {
-        return false;
+        return 1; // Not enough capacity
     }
     
     // Estimate time to visit zone, transfer station, and return to depot
@@ -37,6 +37,10 @@ bool RoutingSolver::canVisitZone(const CollectionVehicle& vehicle, const Zone& z
     double transferStationTime = calculateTravelTime(zone.getLocation(), findClosestTransferStation(zone.getLocation()).getLocation());
     double returnToDepotTime = calculateTravelTime(findClosestTransferStation(zone.getLocation()).getLocation(), problem.depot().getLocation());
     
-    return zoneVisitTime + transferStationTime + returnToDepotTime <= remainingTime;
+    double totalTime = zoneVisitTime + transferStationTime + returnToDepotTime;
+    if (totalTime > remainingTime) {
+        return 2; // Not enough time
+    }
+    return 0; // Can visit zone
 }
 
