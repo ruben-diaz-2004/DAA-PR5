@@ -20,6 +20,50 @@ TransferStation RoutingSolver::findClosestTransferStation(const Location& curren
     return closestStation;
 }
 
+
+Zone RoutingSolver::findClosestZone(const Location& currentLocation, std::vector<Zone> unassignedZones) const {
+    if (unassignedZones.empty()) {
+        throw std::runtime_error("No unassigned zones available.");
+    }
+    
+    Zone closestZone = unassignedZones.front();
+    double minDistance = currentLocation.distanceTo(closestZone.getLocation());
+    
+    for (const auto& zone : unassignedZones) {
+        double distance = currentLocation.distanceTo(zone.getLocation());
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestZone = zone;
+        }
+    }
+    
+    return closestZone;
+}
+
+Zone RoutingSolver::findNClosestZone(const Location& currentLocation, std::vector<Zone> unassignedZones, int n) const {
+    if (unassignedZones.size() < n) {
+        n = unassignedZones.size();
+    }
+
+    // Find the n closest zones and return one randomly
+    std::vector<std::pair<Zone, double>> distances;
+    for (const auto& zone : unassignedZones) {
+        double distance = currentLocation.distanceTo(zone.getLocation());
+        distances.emplace_back(zone, distance);
+    }
+    std::sort(distances.begin(), distances.end(), [](const auto& a, const auto& b) {
+        return a.second < b.second;
+    });
+    std::vector<Zone> closestZones;
+    for (int i = 0; i < n; ++i) {
+        closestZones.push_back(distances[i].first);
+    }
+    // Return a random zone from the closest zones
+    int randomIndex = rand() % n;
+    return closestZones[randomIndex];
+}
+
+
 // Calculate travel time between two locations (simplified)
 double RoutingSolver::calculateTravelTime(const Location& from, const Location& to) const {
     return from.distanceTo(to) / problem.vehicleSpeed() * 60; // Convert to minutes

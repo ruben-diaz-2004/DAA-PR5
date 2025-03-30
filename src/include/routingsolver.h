@@ -11,21 +11,24 @@ class ProblemInstance;
 class RoutingSolver {
 protected:
     // Referencia al problema
-    const ProblemInstance& problem;
+    ProblemInstance& problem;
     
     // Métodos auxiliares comunes
     TransferStation findClosestTransferStation(const Location& currentLocation) const;
+    Zone findClosestZone(const Location& currentLocation, std::vector<Zone> unassignedZones) const;
+    Zone findNClosestZone(const Location& currentLocation, std::vector<Zone> unassignedZones, int n) const;
     double calculateTravelTime(const Location& from, const Location& to) const;
     int canVisitZone(const CollectionVehicle& vehicle, const Zone& zone, double remainingTime) const;
 
 public:
     // Constructor simplificado
-    explicit RoutingSolver(const ProblemInstance& problemInstance)
+    explicit RoutingSolver(ProblemInstance& problemInstance)
         : problem(problemInstance) {}
     
 
     // Métodos puros virtuales que deben implementar las clases derivadas
     virtual std::vector<CollectionVehicle> constructCollectionRoutes() = 0;
+
 
     // Getters y métodos adicionales
     // int getNumberOfZonesVisited() const;

@@ -55,7 +55,6 @@ class ProblemInstance {
     std::vector<TransportationVehicle> transportationVehicles_;
 
     std::unique_ptr<RoutingSolver> routingSolver_;
-
   public:
     ProblemInstance(std::string filename);
     void printResults();
@@ -72,6 +71,8 @@ class ProblemInstance {
         }
     }
 
+
+
     // Getters for problem parameters
     double maxCollectionRouteDuration() const { return maxCollectionRouteDuration_; }
     double maxTransportRouteDuration() const { return maxTransportRouteDuration_; }
@@ -86,6 +87,10 @@ class ProblemInstance {
     const Landfill& landfill() const { return landfill_; }
     const std::vector<CollectionVehicle>& collectionVehicles() const { return collectionVehicles_; }
     const std::vector<TransportationVehicle>& transportationVehicles() const { return transportationVehicles_; }
-};;
+    const std::vector<Task>& tasks() const { return tasks_; }
+
+    // Setters for problem parameters
+    std::vector<Task> tasks_;
+};
 
 #endif

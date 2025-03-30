@@ -26,6 +26,8 @@ public:
     Task();
     Task(double amount, const TransferStation& transferStation, double time);
 
+    void printTask() const;
+
     // Getters
     double getWasteAmount() const;
     const TransferStation& getTransferStation() const;

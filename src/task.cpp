@@ -15,6 +15,14 @@ Task::Task(double amount, const TransferStation& transferStation, double time) :
     arrivalTime(time)
 {}
 
+// Print task details
+void Task::printTask() const {
+    std::cout << "Task Details:" << std::endl;
+    std::cout << "Waste Amount: " << wasteAmount << std::endl;
+    std::cout << "Transfer Station ID: " << station.getId() << std::endl;
+    std::cout << "Arrival Time: " << arrivalTime << std::endl;
+}
+
 // Getters
 double Task::getWasteAmount() const { return wasteAmount; }
 const TransferStation& Task::getTransferStation() const { return station; }

@@ -1,4 +1,4 @@
-#include "include/greedyroutingsolver.h"
+#include "include/grasproutingsolver.h"
 
 #include <iostream>
 #include <vector>
@@ -15,7 +15,7 @@
 
 
 // Implementación del algoritmo voraz para rutas de transporte
-std::vector<CollectionVehicle> GreedyRoutingSolver::constructCollectionRoutes() {
+std::vector<CollectionVehicle> GraspRoutingSolver::constructCollectionRoutes() {
   std::cout << "Constructing transport routes..." << std::endl;
   std::vector<CollectionVehicle> routes;
   std::vector<Zone> unassignedZones = problem.zones();
@@ -38,7 +38,7 @@ std::vector<CollectionVehicle> GreedyRoutingSolver::constructCollectionRoutes() 
     // Continue adding zones to this vehicle's route
     while (!unassignedZones.empty()) {
       // Find the closest unassigned zone to the current vehicle's location 
-      Zone zone = findClosestZone(currentVehicle.getCurrentLocation(), unassignedZones);
+      Zone zone = findNClosestZone(currentVehicle.getCurrentLocation(), unassignedZones, 3);
         // Check if zone can be visited within vehicle constraints
       switch (canVisitZone(currentVehicle, zone, currentVehicle.getRemainingTime())) {
         case 1: // Not enough capacity
@@ -115,9 +115,5 @@ std::vector<CollectionVehicle> GreedyRoutingSolver::constructCollectionRoutes() 
   }
   std::cout << "Total routes: " << routes.size() << std::endl;
   std::cout << "Greedy routing completed." << std::endl;
-  for (const auto& task : tasks) {
-    task.printTask();
-    std::cout << "----------------------------------------" << std::endl;
-  }
   return routes;
 }

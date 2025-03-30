@@ -11,12 +11,12 @@ private:
   std::vector<CollectionVehicle> routes;
 
 public:
-    // Constructor simplificado
-    GreedyRoutingSolver(const ProblemInstance& problemInstance)
-        : RoutingSolver(problemInstance) {}
-    
-    // Implementación del algoritmo voraz
-    std::vector<CollectionVehicle> constructCollectionRoutes() override;
+  // Constructor simplificado
+  GreedyRoutingSolver(ProblemInstance& problemInstance)
+      : RoutingSolver(problemInstance) {}
+  
+  // Implementación del algoritmo voraz
+  std::vector<CollectionVehicle> constructCollectionRoutes() override;
 };
 
 #endif // GREEDY_ROUTING_SOLVER_H

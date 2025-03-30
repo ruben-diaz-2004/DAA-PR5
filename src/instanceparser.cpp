@@ -67,10 +67,10 @@ void ProblemInstanceParser::parseLocations(std::ifstream& file) {
                 depot = Depot(Location(x, y, -1));
             }
             else if (key == "IF") {
-                transferStations.emplace_back(TransferStation(0, Location(x, y, 21)));
+                transferStations.emplace_back(TransferStation(21, Location(x, y, 21)));
             }
             else if (key == "IF1") {
-                transferStations.emplace_back(TransferStation(1, Location(x, y, 22)));
+                transferStations.emplace_back(TransferStation(22, Location(x, y, 22)));
             }
             else if (key == "Dumpsite") {
                 landfill = Landfill(0, Location(x, y, -1));
