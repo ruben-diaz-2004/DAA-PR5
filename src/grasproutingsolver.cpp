@@ -38,7 +38,7 @@ std::vector<CollectionVehicle> GraspRoutingSolver::constructCollectionRoutes() {
     // Continue adding zones to this vehicle's route
     while (!unassignedZones.empty()) {
       // Find the closest unassigned zone to the current vehicle's location 
-      Zone zone = findNClosestZone(currentVehicle.getCurrentLocation(), unassignedZones, 3);
+      Zone zone = findNClosestZone(currentVehicle.getCurrentLocation(), unassignedZones, 2);
         // Check if zone can be visited within vehicle constraints
       switch (canVisitZone(currentVehicle, zone, currentVehicle.getRemainingTime())) {
         case 1: // Not enough capacity
@@ -114,6 +114,6 @@ std::vector<CollectionVehicle> GraspRoutingSolver::constructCollectionRoutes() {
       }
   }
   std::cout << "Total routes: " << routes.size() << std::endl;
-  std::cout << "Greedy routing completed." << std::endl;
+  std::cout << "Grasp routing completed." << std::endl;
   return routes;
 }

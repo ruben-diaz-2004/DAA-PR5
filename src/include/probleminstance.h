@@ -54,24 +54,8 @@ class ProblemInstance {
     std::vector<CollectionVehicle> collectionVehicles_;
     std::vector<TransportationVehicle> transportationVehicles_;
 
-    std::unique_ptr<RoutingSolver> routingSolver_;
   public:
     ProblemInstance(std::string filename);
-    void printResults();
-
-    void setSolver(std::unique_ptr<RoutingSolver> solver) {
-        routingSolver_ = std::move(solver);
-    }
-
-    void solve() {
-        if (routingSolver_) {
-            routingSolver_->constructCollectionRoutes();
-        } else {
-            throw std::runtime_error("Routing solver not set.");
-        }
-    }
-
-
 
     // Getters for problem parameters
     double maxCollectionRouteDuration() const { return maxCollectionRouteDuration_; }
