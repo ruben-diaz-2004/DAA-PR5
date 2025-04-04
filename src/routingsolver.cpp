@@ -81,7 +81,7 @@ int RoutingSolver::canVisitZone(const CollectionVehicle& vehicle, const Zone& zo
     double transferStationTime = calculateTravelTime(zone.getLocation(), findClosestTransferStation(zone.getLocation()).getLocation());
     double returnToDepotTime = calculateTravelTime(findClosestTransferStation(zone.getLocation()).getLocation(), problem.depot().getLocation());
     
-    double totalTime = zoneVisitTime + transferStationTime + returnToDepotTime;
+    double totalTime = zoneVisitTime + transferStationTime + returnToDepotTime + zone.getTime();
     if (totalTime > remainingTime) {
         return 2; // Not enough time
     }

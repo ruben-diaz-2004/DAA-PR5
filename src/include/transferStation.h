@@ -27,7 +27,7 @@ private:
   Location location;
 
 public:
-  TransferStation() : id(0), location(Location()) {}
+  TransferStation() : id(0), location(Location(0,0,0)) {}
   TransferStation(int stationId, const Location& loc) : id(stationId), location(loc) {}
 
   Location getLocation() const { return location; }

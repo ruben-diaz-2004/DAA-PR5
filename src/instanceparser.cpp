@@ -78,7 +78,7 @@ void ProblemInstanceParser::parseLocations(std::ifstream& file) {
 
             // Stop parsing locations when we encounter a numeric line (zone data)
             if (std::isdigit(line[0])) {
-                file.seekg(std::streampos(file.tellg()) - line.length() - 1);
+                file.seekg(static_cast<std::streamoff>(file.tellg()) - static_cast<std::streamoff>(line.length()) - 1);
                 break;
             }
         }
@@ -100,8 +100,9 @@ void ProblemInstanceParser::parseZones(std::ifstream& file) {
         // Parse zone data
         if (iss >> zoneId >> x >> y >> d1 >> d2) {
             // Zone demand is calculated as (D2 - D1)
-            double demand = d2 - d1;
-            zones.emplace_back(Zone(zoneId, Location(x, y, zoneCount), demand));
+            double demand = d2;
+            double time = d1;
+            zones.emplace_back(Zone(zoneId, Location(x, y, zoneCount), demand, time));
         }
         zoneCount++;
     }

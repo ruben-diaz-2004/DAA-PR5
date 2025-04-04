@@ -3,7 +3,7 @@
 // Default constructor
 Landfill::Landfill() : 
     id(0), 
-    location(Location()), 
+    location(Location(0,0,0)), 
     totalWasteReceived(0) 
 {}
 

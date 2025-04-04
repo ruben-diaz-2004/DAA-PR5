@@ -24,13 +24,15 @@ private:
   int id;
   Location location;
   double wasteQuantity;
+  double time_;
 
 public:
-  Zone(int id, const Location& loc, double waste) : id(id), location(loc), wasteQuantity(waste) {}
+  Zone(int id, const Location& loc, double waste, double time) : id(id), location(loc), wasteQuantity(waste), time_(time) {}
 
   int getId() const { return id; }
   Location getLocation() const { return location; }
   double getWasteQuantity() const { return wasteQuantity; }
+  double getTime() const { return time_; }
 };
 
 #endif

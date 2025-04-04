@@ -6,18 +6,19 @@
 #include "include/greedyroutingsolver.h"
 #include "include/grasproutingsolver.h"
 #include "include/parameters.h"
+#include "include/solution.h"
 
 int main(int argc, char* argv[]) {
   // Check if input file is provided
   parameters options = parse_args(argc, argv);
   ProblemInstance instance(argv[1]);
+  Solution solution = Solution();
 
   switch (options.algorithm) {
     case 1: {
       std::cout << "Greedy algorithm selected." << std::endl;
-      GreedyRoutingSolver greedySolver(instance);
+      GreedyRoutingSolver greedySolver(instance, solution);
       std::vector greedyRoutes = greedySolver.constructCollectionRoutes();
-      std::cout << "Greedy routing completed." << std::endl;
       break;
     }
     case 2: {

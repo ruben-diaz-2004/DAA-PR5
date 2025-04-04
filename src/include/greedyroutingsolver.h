@@ -3,17 +3,20 @@
 #define GREEDY_ROUTING_SOLVER_H
 
 #include "routingsolver.h"
+#include "solution.h"
 #include <vector>
 
 
 class GreedyRoutingSolver : public RoutingSolver {
 private:
   std::vector<CollectionVehicle> routes;
+  std::vector<Task> tasks;
+  Solution& solution_;
 
 public:
   // Constructor simplificado
-  GreedyRoutingSolver(ProblemInstance& problemInstance)
-      : RoutingSolver(problemInstance) {}
+  GreedyRoutingSolver(ProblemInstance& problemInstance, Solution& solution)
+      : RoutingSolver(problemInstance), solution_(solution) {}
   
   // Implementación del algoritmo voraz
   std::vector<CollectionVehicle> constructCollectionRoutes() override;

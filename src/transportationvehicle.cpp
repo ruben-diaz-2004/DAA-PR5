@@ -10,7 +10,7 @@ TransportationVehicle::TransportationVehicle() :
     currentLoad(0), 
     maxRouteDuration(0), 
     remainingTime(0),
-    currentLocation(Location())
+    currentLocation(Location(0,0,0))
 {}
 
 // Parameterized constructor
@@ -24,7 +24,7 @@ TransportationVehicle::TransportationVehicle(
     currentLoad(0), 
     maxRouteDuration(maxTime),
     remainingTime(maxTime),
-    currentLocation(Location())
+    currentLocation(Location(0,0,0))
 {}
 
 // Check if vehicle can accept a task
