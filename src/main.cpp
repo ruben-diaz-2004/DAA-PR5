@@ -10,6 +10,12 @@
 
 int main(int argc, char* argv[]) {
   // Check if input file is provided
+  if (argc < 2) {
+    std::cerr << "Error: No input file provided." << std::endl;
+    std::cerr << "Usage: " << argv[0] << " <input_file> [-greedy | -grasp <n>]" << std::endl;
+    return 1;
+  }
+
   parameters options = parse_args(argc, argv);
   ProblemInstance instance(argv[1]);
   Solution solution = Solution();
@@ -18,14 +24,18 @@ int main(int argc, char* argv[]) {
     case 1: {
       std::cout << "Greedy algorithm selected." << std::endl;
       GreedyRoutingSolver greedySolver(instance, solution);
-      std::vector greedyRoutes = greedySolver.constructCollectionRoutes();
+      std::vector<CollectionVehicle> greedyRoutes = greedySolver.constructCollectionRoutes();
       break;
     }
     case 2: {
-      std::cout << "GRASP algorithm selected." << std::endl;
-      GraspRoutingSolver graspSolver(instance, options.graspN, solution);
-      std::vector graspRoutes = graspSolver.constructCollectionRoutes();
-      std::cout << "GRASP routing completed." << std::endl;
+      std::cout << "GRASP algorithm selected with n=" << options.graspN << std::endl;
+      GraspRoutingSolver graspSolver(instance, options.graspN, options.iterations, solution);
+      std::vector<CollectionVehicle> graspRoutes = graspSolver.constructCollectionRoutes();
+      
+      // Imprimir la mejor solución encontrada
+      std::cout << "GRASP routing completed with best solution:" << std::endl;
+      std::cout << "- Total collection vehicles: " << graspRoutes.size() << std::endl;
+      std::cout << "- Total tasks: " << solution.getTasks().size() << std::endl;
       break;
     }
     default: {
@@ -33,18 +43,6 @@ int main(int argc, char* argv[]) {
       return 1;
     }
   }
-
-  // ProblemInstance instance(argv[1]);
-  // std::cout << "Problem instance loaded successfully." << std::endl;
-
-  // // Create a GreedyRoutingSolver instance
-  // // GreedyRoutingSolver greedySolver(instance);
-  // // std::vector<CollectionVehicle> greedyRoutes = greedySolver.constructCollectionRoutes();
-  // // std::cout << "Greedy routing completed." << std::endl;
-
-  // // Create a GraspRoutingSolver instance
-  // GraspRoutingSolver graspSolver(instance);
-  // std::vector<CollectionVehicle> graspRoutes = graspSolver.constructCollectionRoutes();
 
   return 0;
 }
