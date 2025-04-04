@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
     }
     case 2: {
       std::cout << "GRASP algorithm selected." << std::endl;
-      GraspRoutingSolver graspSolver(instance, options.graspN);
+      GraspRoutingSolver graspSolver(instance, options.graspN, solution);
       std::vector graspRoutes = graspSolver.constructCollectionRoutes();
       std::cout << "GRASP routing completed." << std::endl;
       break;

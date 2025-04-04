@@ -9,8 +9,6 @@
 
 class GreedyRoutingSolver : public RoutingSolver {
 private:
-  std::vector<CollectionVehicle> routes;
-  std::vector<Task> tasks;
   Solution& solution_;
 
 public:
