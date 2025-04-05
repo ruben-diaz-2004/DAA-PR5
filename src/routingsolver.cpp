@@ -63,12 +63,6 @@ Zone RoutingSolver::findNClosestZone(const Location& currentLocation, std::vecto
     return closestZones[randomIndex];
 }
 
-
-// Calculate travel time between two locations (simplified)
-double RoutingSolver::calculateTravelTime(const Location& from, const Location& to) const {
-    return from.distanceTo(to) / problem.vehicleSpeed() * 60; // Convert to minutes
-}
-
 // Check if a vehicle can visit a zone within remaining time and capacity
 int RoutingSolver::canVisitZone(const CollectionVehicle& vehicle, const Zone& zone, double remainingTime) const {
     // Check if zone waste fits in vehicle capacity
@@ -88,3 +82,9 @@ int RoutingSolver::canVisitZone(const CollectionVehicle& vehicle, const Zone& zo
     return 0; // Can visit zone
 }
 
+double RoutingSolver::calculateTravelTime(const Location& from, const Location& to) const {
+    // Get the distance from the matrix if available
+    double distance = problem.getDistance(from.getId(), to.getId());
+    // Calculate travel time based on distance and vehicle speed
+    return distance / problem.vehicleSpeed() * 60; // Convert to minutes
+}

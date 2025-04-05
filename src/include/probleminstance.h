@@ -54,6 +54,9 @@ class ProblemInstance {
     std::vector<CollectionVehicle> collectionVehicles_;
     std::vector<TransportationVehicle> transportationVehicles_;
 
+    std::vector<std::vector<double>> distanceMatrix_;
+    void initializeDistanceMatrix();
+    int mapLocationIdToIndex(int locationId) const;
   public:
     ProblemInstance(std::string filename);
 
@@ -71,6 +74,8 @@ class ProblemInstance {
     const Landfill& landfill() const { return landfill_; }
     const std::vector<CollectionVehicle>& collectionVehicles() const { return collectionVehicles_; }
     const std::vector<TransportationVehicle>& transportationVehicles() const { return transportationVehicles_; }
+    double getDistance(int fromId, int toId) const;
+
 };
 
 #endif

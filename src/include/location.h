@@ -23,6 +23,7 @@ public:
 
     double getX() const { return x_; }
     double getY() const { return y_; }
+    int getId() const { return id_; }
 
     void printLocation() const {
         std::cout << "Location(" << x_ << ", " << y_ << ")" << std::endl;
