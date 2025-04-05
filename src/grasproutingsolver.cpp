@@ -16,7 +16,7 @@
 
 // Implementación del algoritmo GRASP para rutas de transporte
 std::vector<CollectionVehicle> GraspRoutingSolver::constructCollectionRoutes() {
-  std::cout << "Running GRASP with " << iterations_ << " iterations..." << std::endl;
+  // std::cout << "Running GRASP with " << iterations_ << " iterations..." << std::endl;
   
   Solution bestSolution;
   double bestTotalTime = std::numeric_limits<double>::max();
@@ -115,19 +115,19 @@ std::vector<CollectionVehicle> GraspRoutingSolver::constructCollectionRoutes() {
       bestTotalTime = totalTime;
       bestSolution = tempSolution;
       
-      std::cout << "Iteration " << iter + 1 << ": Found better solution with total time: " 
-                << bestTotalTime << " minutes, using " << routes.size() << " vehicles." << std::endl;
+      // std::cout << "Iteration " << iter + 1 << ": Found better solution with total time: " 
+      //           << bestTotalTime << " minutes, using " << routes.size() << " vehicles." << std::endl;
     }
     
-    if (iter % 10 == 0 && iter > 0) {
-      std::cout << "Completed " << iter << " iterations. Current best time: " 
-                << bestTotalTime << " minutes." << std::endl;
-    }
+    // if (iter % 10 == 0 && iter > 0) {
+    //   std::cout << "Completed " << iter << " iterations. Current best time: " 
+    //             << bestTotalTime << " minutes." << std::endl;
+    // }
   }
   
-  std::cout << "GRASP completed after " << iterations_ << " iterations." << std::endl;
-  std::cout << "Best solution uses " << bestSolution.getCollectionRoutes().size() 
-            << " vehicles with total time: " << bestTotalTime << " minutes." << std::endl;
+  // std::cout << "GRASP completed after " << iterations_ << " iterations." << std::endl;
+  // std::cout << "Best solution uses " << bestSolution.getCollectionRoutes().size() 
+  //           << " vehicles with total time: " << bestTotalTime << " minutes." << std::endl;
   
   // Almacenar la mejor solución
   solution_ = bestSolution;

@@ -21,6 +21,16 @@ class Solution {
   Solution(Solution&& other) = default;
   Solution& operator=(Solution&& other) = default;
   ~Solution() = default;
+
+  // Calculate the total time used by all vehicles in the solution
+  double getTotalTime() const {
+    double totalTime = 0.0;
+    for (const auto& vehicle : collectionRoutes_) {
+      totalTime += (480 - vehicle.getRemainingTime());
+    }
+    return totalTime;
+  }
+
   // Getters
   const std::vector<CollectionVehicle>& getCollectionRoutes() const { return collectionRoutes_; }
   const std::vector<Task>& getTasks() const { return tasks_; }
