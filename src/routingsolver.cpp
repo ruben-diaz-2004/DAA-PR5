@@ -10,7 +10,7 @@ TransferStation RoutingSolver::findClosestTransferStation(const Location& curren
     double minDistance = std::numeric_limits<double>::max();
     
     for (const auto& station : problem.transferStations()) {
-        double distance = currentLocation.distanceTo(station.getLocation());
+        double distance = problem.getDistance(currentLocation.getId(), station.getLocation().getId());
         if (distance < minDistance) {
             minDistance = distance;
             closestStation = station;
@@ -20,17 +20,16 @@ TransferStation RoutingSolver::findClosestTransferStation(const Location& curren
     return closestStation;
 }
 
-
 Zone RoutingSolver::findClosestZone(const Location& currentLocation, std::vector<Zone> unassignedZones) const {
     if (unassignedZones.empty()) {
         throw std::runtime_error("No unassigned zones available.");
     }
     
     Zone closestZone = unassignedZones.front();
-    double minDistance = currentLocation.distanceTo(closestZone.getLocation());
+    double minDistance = problem.getDistance(currentLocation.getId(), closestZone.getLocation().getId());
     
     for (const auto& zone : unassignedZones) {
-        double distance = currentLocation.distanceTo(zone.getLocation());
+        double distance = problem.getDistance(currentLocation.getId(), zone.getLocation().getId());
         if (distance < minDistance) {
             minDistance = distance;
             closestZone = zone;
@@ -48,7 +47,7 @@ Zone RoutingSolver::findNClosestZone(const Location& currentLocation, std::vecto
     // Find the n closest zones and return one randomly
     std::vector<std::pair<Zone, double>> distances;
     for (const auto& zone : unassignedZones) {
-        double distance = currentLocation.distanceTo(zone.getLocation());
+        double distance = problem.getDistance(currentLocation.getId(), zone.getLocation().getId());
         distances.emplace_back(zone, distance);
     }
     std::sort(distances.begin(), distances.end(), [](const auto& a, const auto& b) {

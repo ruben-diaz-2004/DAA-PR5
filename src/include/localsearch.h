@@ -1,37 +1,31 @@
-// RoutingSolver (Interface/Abstract Base Class)
-#ifndef ROUTING_SOLVER_H
-#define ROUTING_SOLVER_H
 
-#include <vector>
+#ifndef LOCALSEARCH_H
+#define LOCALSEARCH_H
+
+#include "probleminstance.h"
+#include "solution.h"
 #include "collectionvehicle.h"
-#include "transportationvehicle.h"
 
-class ProblemInstance;
+class LocalSearch {
+public:
+    // Constructor
+    LocalSearch(ProblemInstance& problemInstance, Solution& solution)
+        : problem(problemInstance), solution(solution) {}
 
-class RoutingSolver {
+    // Método para ejecutar la búsqueda local
+     virtual void runLocalSearch() = 0;
+
 protected:
     // Referencia al problema
     ProblemInstance& problem;
-    
+    Solution& solution;
+
     // Métodos auxiliares comunes
     TransferStation findClosestTransferStation(const Location& currentLocation) const;
     Zone findClosestZone(const Location& currentLocation, std::vector<Zone> unassignedZones) const;
     Zone findNClosestZone(const Location& currentLocation, std::vector<Zone> unassignedZones, int n) const;
     double calculateTravelTime(const Location& from, const Location& to) const;
     int canVisitZone(const CollectionVehicle& vehicle, const Zone& zone, double remainingTime) const;
-
-public:
-    // Constructor simplificado
-    RoutingSolver(ProblemInstance& problemInstance)
-        : problem(problemInstance) {}
-    
-
-    // Métodos puros virtuales que deben implementar las clases derivadas
-    virtual std::vector<CollectionVehicle> constructCollectionRoutes() = 0;
-
-
-    // Getters y métodos adicionales
-    // int getNumberOfZonesVisited() const;
 };
 
-#endif // ROUTING_SOLVER_H
+#endif // LOCALSEARCH_H
