@@ -8,8 +8,9 @@
 #include "include/grasproutingsolver.h"
 #include "include/parameters.h"
 #include "include/solution.h"
-#include "include/swapintra.h"
 #include "include/localsearch.h"
+#include "include/swapintra.h"
+#include "include/reinsertintra.h"
 
 int main(int argc, char* argv[]) {
   // Check if input file is provided
@@ -47,7 +48,7 @@ int main(int argc, char* argv[]) {
       std::cout << "GRASP algorithm completed." << std::endl;
       std::cout << "Total time after GRASP: " << total_time << std::endl;
       std::cout << "Local search algorithm selected." << std::endl;
-      SwapIntra swapIntra(instance, solution);
+      ReinsertIntra swapIntra(instance, solution);
       swapIntra.runLocalSearch();
       total_time = solution.getTotalTime();
       std::cout << "Local search completed." << std::endl;
