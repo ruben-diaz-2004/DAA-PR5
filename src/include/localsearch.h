@@ -20,12 +20,17 @@ protected:
     ProblemInstance& problem;
     Solution& solution;
 
-    // Métodos auxiliares comunes
-    TransferStation findClosestTransferStation(const Location& currentLocation) const;
-    Zone findClosestZone(const Location& currentLocation, std::vector<Zone> unassignedZones) const;
-    Zone findNClosestZone(const Location& currentLocation, std::vector<Zone> unassignedZones, int n) const;
     double calculateTravelTime(const Location& from, const Location& to) const;
-    int canVisitZone(const CollectionVehicle& vehicle, const Zone& zone, double remainingTime) const;
+    bool evaluateRoute(const std::vector<Location>& route, double& totalTime, double& finalLoad);
+    bool isZone(const Location& location) const {
+        for (const auto& zone : problem.zones()) {
+            if (zone.getId() == location.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    CollectionVehicle createVehicleWithRoute(int id, double capacity, const std::vector<Location>& route, double timeUsed, double finalLoad);
 };
 
 #endif // LOCALSEARCH_H

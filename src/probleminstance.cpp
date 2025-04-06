@@ -29,18 +29,18 @@ ProblemInstance::ProblemInstance(std::string filename) {
     zones_ = parser.getZones(); 
 
     // Print loaded data for debugging
-    std::cout << "Depot Location: (" << depot_.getLocation().getId() << std::endl;
-    std::cout << "Landfill Location: (" << landfill_.getLocation().getId() << ")" << std::endl;
-    for (const auto& zone : zones_) {
-        std::cout << "Zone ID: " << zone.getId() << ", Location: (" 
-                  << zone.getLocation().getX() << ", " 
-                  << zone.getLocation().getY() << ")" << std::endl;
-    }
-    for (const auto& station : transferStations_) {
-        std::cout << "Transfer Station ID: " << station.getId() << ", Location: (" 
-                  << station.getLocation().getX() << ", " 
-                  << station.getLocation().getY() << ")" << std::endl;
-    }
+    // std::cout << "Depot Location: (" << depot_.getLocation().getId() << std::endl;
+    // std::cout << "Landfill Location: (" << landfill_.getLocation().getId() << ")" << std::endl;
+    // for (const auto& zone : zones_) {
+    //     std::cout << "Zone ID: " << zone.getId() << ", Location: (" 
+    //               << zone.getLocation().getX() << ", " 
+    //               << zone.getLocation().getY() << ")" << std::endl;
+    // }
+    // for (const auto& station : transferStations_) {
+    //     std::cout << "Transfer Station ID: " << station.getId() << ", Location: (" 
+    //               << station.getLocation().getX() << ", " 
+    //               << station.getLocation().getY() << ")" << std::endl;
+    // }
 
     // Initialize the distance matrix
     initializeDistanceMatrix();
@@ -97,12 +97,12 @@ void ProblemInstance::initializeDistanceMatrix() {
     }
     
     // Imprimir algunos mapeos para debug
-    std::cout << "Distance matrix initialized with " << distanceMatrix_.size() << " locations" << std::endl;
-    std::cout << "Depot (ID -1) is at index " << mapLocationIdToIndex(-1) << std::endl;
-    if (!zones_.empty())
-        std::cout << "First zone (ID " << zones_[0].getId() << ") is at index " << mapLocationIdToIndex(zones_[0].getId()) << std::endl;
-    if (!transferStations_.empty())
-        std::cout << "First transfer station (ID " << transferStations_[0].getId() << ") is at index " << mapLocationIdToIndex(transferStations_[0].getId()) << std::endl;
+    // std::cout << "Distance matrix initialized with " << distanceMatrix_.size() << " locations" << std::endl;
+    // std::cout << "Depot (ID -1) is at index " << mapLocationIdToIndex(-1) << std::endl;
+    // if (!zones_.empty())
+    //     std::cout << "First zone (ID " << zones_[0].getId() << ") is at index " << mapLocationIdToIndex(zones_[0].getId()) << std::endl;
+    // if (!transferStations_.empty())
+    //     std::cout << "First transfer station (ID " << transferStations_[0].getId() << ") is at index " << mapLocationIdToIndex(transferStations_[0].getId()) << std::endl;
 }
 
 // Method to get the distance between two locations
