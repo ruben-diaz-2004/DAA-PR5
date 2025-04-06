@@ -10,7 +10,9 @@
 #include "include/solution.h"
 #include "include/localsearch.h"
 #include "include/swapintra.h"
+#include "include/swapinter.h"
 #include "include/reinsertintra.h"
+#include "include/reinsertinter.h"
 
 int main(int argc, char* argv[]) {
   // Check if input file is provided
@@ -37,6 +39,14 @@ int main(int argc, char* argv[]) {
       std::vector<CollectionVehicle> greedyRoutes = greedySolver.constructCollectionRoutes();
       num_vehicles = greedyRoutes.size();
       total_time = solution.getTotalTime();
+      // std::cout << "Greedy algorithm completed." << std::endl;
+      // std::cout << "Total time after greedy: " << total_time << std::endl;
+      // std::cout << "Local search algorithm selected." << std::endl;
+      // ReinsertIntra intra(instance, solution);
+      // intra.runLocalSearch();
+      // total_time = solution.getTotalTime();
+      // std::cout << "Local search completed." << std::endl;
+      // std::cout << "Total time after local search: " << total_time << std::endl;
       break;
     }
     case 2: {
@@ -48,8 +58,8 @@ int main(int argc, char* argv[]) {
       std::cout << "GRASP algorithm completed." << std::endl;
       std::cout << "Total time after GRASP: " << total_time << std::endl;
       std::cout << "Local search algorithm selected." << std::endl;
-      ReinsertIntra swapIntra(instance, solution);
-      swapIntra.runLocalSearch();
+      ReinsertInter inter(instance, solution);
+      inter.runLocalSearch();
       total_time = solution.getTotalTime();
       std::cout << "Local search completed." << std::endl;
       std::cout << "Total time after local search: " << total_time << std::endl;
