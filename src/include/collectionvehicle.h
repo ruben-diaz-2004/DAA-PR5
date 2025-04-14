@@ -38,6 +38,14 @@ public:
       route.push_back(loc);
   }
 
+  void setRoute(const std::vector<Location>& newRoute) {
+      route = newRoute;
+  }
+
+  void setRemainingTime(double time) {
+      remainingTime = time;
+  }
+
   void addLoad(double wasteAmount) {
       currentLoad += wasteAmount;
   }
