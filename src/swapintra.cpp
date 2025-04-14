@@ -7,10 +7,13 @@
 void SwapIntra::runLocalSearch() {
     bool improvementFound = true;
     double maxRouteDuration = problem.maxCollectionRouteDuration();
-    
+    std::cout << "Max route duration: " << maxRouteDuration << std::endl;
+    const double IMPROVEMENT_THRESHOLD = 0.0001;
+    std::vector<CollectionVehicle> routes = solution.getCollectionRoutes();
+    std::cout << "Initial time: " << solution.getTotalTime() << std::endl;
+
     while (improvementFound) {
         improvementFound = false;
-        std::vector<CollectionVehicle> routes = solution.getCollectionRoutes();
         
         for (size_t routeIndex = 0; routeIndex < routes.size(); routeIndex++) {
             std::vector<Location> currentRoute = routes[routeIndex].getRoute();
@@ -29,15 +32,18 @@ void SwapIntra::runLocalSearch() {
                 // Evaluate the new route
                 double timeUsed = 0.0;
                 double finalLoad = 0.0;
-                
                 if (evaluateRoute(newRoute, timeUsed, finalLoad)) {
                     // Calculate the time difference
-                    double currentRouteTime = (maxRouteDuration -  routes[routeIndex].getRemainingTime());
+                    double oldTimeUsed = 0.0;
+                    double oldFinalLoad = 0.0;
+                    evaluateRoute(currentRoute, oldTimeUsed, oldFinalLoad);
                     
-                    // If better, update the solution
-                    if (timeUsed < currentRouteTime) {
-                        std::cout << "Improvement found! Old route time: " << currentRouteTime 
-                                  << " New route time: " << timeUsed << std::endl;
+                    // If better (by at least the threshold), update the solution
+                    double improvement = oldTimeUsed - timeUsed;
+                    if (improvement > IMPROVEMENT_THRESHOLD) {
+                        std::cout << "Improvement found! Old route time: " << oldTimeUsed 
+                                  << " New route time: " << timeUsed 
+                                  << " (Improvement: " << improvement << ")" << std::endl;
                         std::cout << "Old Route IDs: ";
                         for (const auto& loc : currentRoute) {
                             std::cout << loc.getId() << " ";
@@ -49,10 +55,12 @@ void SwapIntra::runLocalSearch() {
                         }
                         std::cout << std::endl;
                         // Update the route in our collection
+                        std::cout << routes[routeIndex].getRemainingTime() << std::endl;
                         routes[routeIndex].setRoute(newRoute);
-                        routes[routeIndex].setRemainingTime(maxRouteDuration - timeUsed);
+                        routes[routeIndex].subtractRemainingTime(-improvement);
                         routes[routeIndex].resetLoad();
                         routes[routeIndex].addLoad(finalLoad);
+                        std::cout << routes[routeIndex].getRemainingTime() << std::endl;
                         
                         improvementFound = true;
 
@@ -66,8 +74,8 @@ void SwapIntra::runLocalSearch() {
                 break;
             }
         }
-        // Update the solution with the new routes
-        solution.setCollectionRoutes(routes);
     }
-
+    // Update the solution with the new routes
+    solution.setCollectionRoutes(routes);
+    std::cout << "Final time after local search: " << solution.getTotalTime() << std::endl;
 }
