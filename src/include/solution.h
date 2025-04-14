@@ -7,9 +7,6 @@
 #include "collectionvehicle.h"
 #include "task.h"
 
-
-
-
 class Solution {
   public:
   Solution() = default;
@@ -34,6 +31,7 @@ class Solution {
   // Getters
   const std::vector<CollectionVehicle>& getCollectionRoutes() const { return collectionRoutes_; }
   const std::vector<Task>& getTasks() const { return tasks_; }
+  int getNumVehicles() const { return collectionRoutes_.size(); }
   // Setters
   void setCollectionRoutes(const std::vector<CollectionVehicle>& collectionRoutes) { collectionRoutes_ = collectionRoutes; }
   void setTasks(const std::vector<Task>& tasks) { tasks_ = tasks; }

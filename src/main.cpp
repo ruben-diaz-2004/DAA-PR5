@@ -13,6 +13,7 @@
 #include "include/swapinter.h"
 #include "include/reinsertintra.h"
 #include "include/reinsertinter.h"
+#include "include/rvns.h"
 
 int main(int argc, char* argv[]) {
   // Check if input file is provided
@@ -39,14 +40,31 @@ int main(int argc, char* argv[]) {
       std::vector<CollectionVehicle> greedyRoutes = greedySolver.constructCollectionRoutes();
       num_vehicles = greedyRoutes.size();
       total_time = solution.getTotalTime();
-      // std::cout << "Greedy algorithm completed." << std::endl;
-      // std::cout << "Total time after greedy: " << total_time << std::endl;
+      std::cout << "Greedy algorithm completed." << std::endl;
+      std::cout << "Total time after greedy: " << total_time << std::endl;
       // std::cout << "Local search algorithm selected." << std::endl;
       // ReinsertIntra intra(instance, solution);
       // intra.runLocalSearch();
       // total_time = solution.getTotalTime();
       // std::cout << "Local search completed." << std::endl;
       // std::cout << "Total time after local search: " << total_time << std::endl;
+
+      std::cout << "Local search algorithm selected." << std::endl;
+      SwapIntra inter(instance, solution);
+      inter.runLocalSearch();
+      total_time = solution.getTotalTime();
+      std::cout << "Local search completed." << std::endl;
+      std::cout << "Total time after local search: " << total_time << std::endl;
+
+      // Print the route
+      std::cout << "Greedy route: ";
+      for (const auto& vehicle : solution.getCollectionRoutes()) {
+        std::cout << "Vehicle ID: " << vehicle.getId() << "Remaining time:" << vehicle.getRemainingTime() << ", Route: ";
+        for (const auto& loc : vehicle.getRoute()) {
+          std::cout << loc.getId() << " ";
+        }
+        std::cout << std::endl;
+      }
       break;
     }
     case 2: {
@@ -57,8 +75,16 @@ int main(int argc, char* argv[]) {
       total_time = solution.getTotalTime();
       std::cout << "GRASP algorithm completed." << std::endl;
       std::cout << "Total time after GRASP: " << total_time << std::endl;
+
+      // RVNS rvns(instance, solution);
+      // rvns.RunVNS();
+      // num_vehicles = solution.getNumVehicles();
+      // total_time = solution.getTotalTime();
+      // std::cout << "RVND algorithm completed." << std::endl;
+      // std::cout << "Total time after RVNS: " << total_time << std::endl;
+
       std::cout << "Local search algorithm selected." << std::endl;
-      ReinsertInter inter(instance, solution);
+      SwapIntra inter(instance, solution);
       inter.runLocalSearch();
       total_time = solution.getTotalTime();
       std::cout << "Local search completed." << std::endl;

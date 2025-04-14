@@ -42,9 +42,9 @@ public:
       currentLoad += wasteAmount;
   }
 
-    void subtractRemainingTime(double time) {
-        remainingTime -= time;
-    }
+  void subtractRemainingTime(double time) {
+      remainingTime -= time;
+  }
 
   void resetLoad() {
       currentLoad = 0.0;

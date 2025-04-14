@@ -51,16 +51,15 @@ bool LocalSearch::evaluateRoute(const std::vector<Location>& route, double& tota
 
 
 // Helper function to create a new vehicle with a given route
-CollectionVehicle LocalSearch::createVehicleWithRoute(int id, double capacity, const std::vector<Location>& route, 
-  double timeUsed, double finalLoad) {
-CollectionVehicle vehicle(id, capacity, problem.maxCollectionRouteDuration(), problem.vehicleSpeed());
+CollectionVehicle LocalSearch::createVehicleWithRoute(int id, double capacity, const std::vector<Location>& route, double timeUsed, double finalLoad) {
+  CollectionVehicle vehicle(id, capacity, problem.maxCollectionRouteDuration(), problem.vehicleSpeed());
 
-for (const auto& loc : route) {
-vehicle.addLocation(loc);
-}
+  for (const auto& loc : route) {
+    vehicle.addLocation(loc);
+  }
 
-vehicle.addLoad(finalLoad);
-vehicle.subtractRemainingTime(timeUsed);
+  vehicle.addLoad(finalLoad);
+  vehicle.subtractRemainingTime(timeUsed);
 
-return vehicle;
+  return vehicle;
 }
