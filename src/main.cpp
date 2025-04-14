@@ -13,7 +13,8 @@
 #include "include/swapinter.h"
 #include "include/reinsertintra.h"
 #include "include/reinsertinter.h"
-#include "include/rvns.h"
+#include "include/twoopt.h"
+#include "include/rvnd.h"
 
 int main(int argc, char* argv[]) {
   // Check if input file is provided
@@ -50,11 +51,18 @@ int main(int argc, char* argv[]) {
       // std::cout << "Total time after local search: " << total_time << std::endl;
 
       std::cout << "Local search algorithm selected." << std::endl;
-      SwapIntra inter(instance, solution);
+      TwoOpt inter(instance, solution);
       inter.runLocalSearch();
       total_time = solution.getTotalTime();
       std::cout << "Local search completed." << std::endl;
       std::cout << "Total time after local search: " << total_time << std::endl;
+
+      // RVND rvnd(instance, solution);
+      // rvnd.RunVND();
+      // num_vehicles = solution.getNumVehicles();
+      // total_time = solution.getTotalTime();
+      // std::cout << "RVND algorithm completed." << std::endl;
+      // std::cout << "Total time after RVND: " << total_time << std::endl;
 
       // Print the route
       std::cout << "Greedy route: ";
@@ -112,5 +120,12 @@ int main(int argc, char* argv[]) {
   // Imprimir resultados en formato uniforme para facilitar el procesamiento posterior
   std::cout << "RESULTADO," << filename << "," << num_vehicles << "," << total_time << "," << cpu_time << std::endl;
 
+  // Imprimir las tareas guardadas en solution
+  std::cout << "Tasks:" << std::endl;
+  for (const auto& task: solution.getTasks()) {
+    std::cout << "Transfer Station: " << task.getTransferStation().getId() 
+              << ", Waste Amount: " << task.getWasteAmount() 
+              << ", Arrival Time: " << task.getArrivalTime() << std::endl;
+  }
   return 0;
 }
