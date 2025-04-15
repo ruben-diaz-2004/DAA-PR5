@@ -50,12 +50,12 @@ int main(int argc, char* argv[]) {
       // std::cout << "Local search completed." << std::endl;
       // std::cout << "Total time after local search: " << total_time << std::endl;
 
-      std::cout << "Local search algorithm selected." << std::endl;
-      TwoOpt inter(instance, solution);
-      inter.runLocalSearch();
-      total_time = solution.getTotalTime();
-      std::cout << "Local search completed." << std::endl;
-      std::cout << "Total time after local search: " << total_time << std::endl;
+      // std::cout << "Local search algorithm selected." << std::endl;
+      // SwapIntra inter(instance, solution);
+      // inter.runLocalSearch();
+      // total_time = solution.getTotalTime();
+      // std::cout << "Local search completed." << std::endl;
+      // std::cout << "Total time after local search: " << total_time << std::endl;
 
       // RVND rvnd(instance, solution);
       // rvnd.RunVND();
@@ -121,6 +121,8 @@ int main(int argc, char* argv[]) {
   std::cout << "RESULTADO," << filename << "," << num_vehicles << "," << total_time << "," << cpu_time << std::endl;
 
   // Imprimir las tareas guardadas en solution
+  solution.buildTasks(instance);
+  std::cout << "Total tasks: " << solution.getTasks().size() << std::endl;
   std::cout << "Tasks:" << std::endl;
   for (const auto& task: solution.getTasks()) {
     std::cout << "Transfer Station: " << task.getTransferStation().getId() 

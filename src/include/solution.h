@@ -6,6 +6,7 @@
 #include <vector>
 #include "collectionvehicle.h"
 #include "task.h"
+#include "probleminstance.h"
 
 class Solution {
   public:
@@ -39,6 +40,8 @@ class Solution {
   void addCollectionRoute(const CollectionVehicle& route) { collectionRoutes_.push_back(route); }
   // Add a task
   void addTask(const Task& task) { tasks_.push_back(task); }
+  void clearTasks() { tasks_.clear(); }
+  void buildTasks(const ProblemInstance& problem);
 
   private:
   std::vector<CollectionVehicle> collectionRoutes_;
