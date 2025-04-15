@@ -29,7 +29,6 @@ public:
     // Métodos puros virtuales que deben implementar las clases derivadas
     virtual std::vector<CollectionVehicle> constructCollectionRoutes() = 0;
 
-
     // Getters y métodos adicionales
     // int getNumberOfZonesVisited() const;
 };
