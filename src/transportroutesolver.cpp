@@ -1,69 +1,93 @@
 #include "include/transportroutesolver.h"
 #include "include/transportationvehicle.h"
 #include "include/transferStation.h"
-
-
 #include <iostream>
 #include <vector>
 #include <limits>
+#include <algorithm>
 
-
-TransportRouteSolver::TransportRouteSolver(ProblemInstance& problemInstance, Solution& solution)
-    : problem_(problemInstance), solution_(solution) {
+TransportRouteSolver::TransportRouteSolver(ProblemInstance& problemInstance, Solution& sol)
+    : problem_(problemInstance), solution_(sol) {
     vehicleTravelSpeed_ = problemInstance.vehicleSpeed();
     vehicleCapacity_ = problemInstance.transportVehicleCapacity();
     maxRouteDuration_ = problemInstance.maxTransportRouteDuration();
     transferStations_ = problemInstance.transferStations();
-    transportationVehicles_.reserve(problemInstance.maxVehicles());
+    tasks_ = solution_.getTasks();
 }
 
-
 std::vector<TransportationVehicle> TransportRouteSolver::constructTransportRoutes() {
-    std::vector<TransportationVehicle> transportRoutes;
-    // Sort tasks by arrival time
+    std::vector<TransportationVehicle> vehicles;
+    
+    // Paso 1: Ordenar tareas por tiempo de llegada (línea 1 del Algoritmo 2)
     std::sort(tasks_.begin(), tasks_.end(), [](const Task& a, const Task& b) {
         return a.getArrivalTime() < b.getArrivalTime();
     });
-    // Iterate through each task
+    
+    // Paso 2: Encontrar la cantidad mínima de residuos (línea 3 del Algoritmo 2)
+    double minWasteAmount = std::numeric_limits<double>::max();
     for (const auto& task : tasks_) {
-        // Find the best vehicle for the task
-        TransportationVehicle bestVehicle = selectBestVehicle(transportationVehicles_, task);
-        if (bestVehicle.canAcceptTask(task)) {
-            // Assign the task to the vehicle
-            bestVehicle.addTask(task);
-            transportRoutes.push_back(bestVehicle);
-        } else {
-            // Create a new vehicle if no existing vehicle can accept the task
+        minWasteAmount = std::min(minWasteAmount, task.getWasteAmount());
+    }
+    
+    // Copia de las tareas para procesar (línea 4-23 del Algoritmo 2)
+    std::vector<Task> remainingTasks = tasks_;
+    
+    while (!remainingTasks.empty()) {
+        // Obtener la primera tarea (líneas 5-6)
+        Task currentTask = remainingTasks.front();
+        remainingTasks.erase(remainingTasks.begin());
+        
+        // Seleccionar el mejor vehículo para la tarea usando selectBestVehicle (línea 7)
+        TransportationVehicle* selectedVehicle = selectBestVehicle(vehicles, currentTask);
+        
+        if (selectedVehicle == nullptr) {
+            // Crear un nuevo vehículo (líneas 8-13)
             TransportationVehicle newVehicle(
-                transportationVehicles_.size() + 1,
+                vehicles.size() + 1,
                 vehicleCapacity_,
                 maxRouteDuration_
             );
-            newVehicle.addTask(task);
-            transportRoutes.push_back(newVehicle);
+            
+            // Iniciar en el vertedero
+            newVehicle.addLocation(problem_.landfill().getLocation());
+            
+            // Añadir la tarea al nuevo vehículo
+            newVehicle.addTask(currentTask);
+            
+            // Añadir el nuevo vehículo a la lista
+            vehicles.push_back(newVehicle);
+        } else {
+            // Añadir la tarea al vehículo existente (líneas 15-17)
+            selectedVehicle->addTask(currentTask);
+            
+            // Verificar si se necesita ir al vertedero (líneas 18-21)
+            if (selectedVehicle->getRemainingCapacity() < minWasteAmount) {
+                selectedVehicle->returnToLandfill(problem_.landfill().getLocation());
+            }
         }
     }
-    // Return to landfill
-    for (auto& vehicle : transportRoutes) {
-        if (vehicle.getCurrentLoad() > 0) {
+    
+    // Asegurar que todos los vehículos terminen en el vertedero (líneas 24-28)
+    for (auto& vehicle : vehicles) {
+        if (vehicle.getCurrentLocation().getId() != problem_.landfill().getId()) {
             vehicle.returnToLandfill(problem_.landfill().getLocation());
         }
     }
     
-
-    return transportRoutes;
+    return vehicles;
 }
 
 double TransportRouteSolver::calculateTotalTransportTime(const std::vector<TransportationVehicle>& routes) const {
     double totalTime = 0.0;
     for (const auto& vehicle : routes) {
-        totalTime += vehicle.getRemainingTime();
+        // Usar el tiempo máximo menos el tiempo restante para obtener el tiempo usado
+        totalTime += (maxRouteDuration_ - vehicle.getRemainingTime());
     }
     return totalTime;
 }
 
 double TransportRouteSolver::calculateTravelTime(const Location& from, const Location& to) const {
-    return problem_.getDistance(from.getId(), to.getId()) / vehicleTravelSpeed_ * 60; // Convert to minutes
+    return from.distanceTo(to) / vehicleTravelSpeed_ * 60; // Convertir a minutos
 }
 
 TransferStation TransportRouteSolver::findClosestTransferStation(const Location& currentLocation) const {
@@ -81,19 +105,30 @@ TransferStation TransportRouteSolver::findClosestTransferStation(const Location&
     return closestStation;
 }
 
-TransportationVehicle TransportRouteSolver::selectBestVehicle(const std::vector<TransportationVehicle>& vehicles, const Task& task) const {
-    double minTime = std::numeric_limits<double>::max();
-    TransportationVehicle bestVehicle;
-
-    for (const auto& vehicle : vehicles) {
+// Implementación del Algoritmo 3 según el pseudocódigo
+TransportationVehicle* TransportRouteSolver::selectBestVehicle(std::vector<TransportationVehicle>& vehicles, const Task& task) const {
+    TransportationVehicle* selectedVehicle = nullptr;
+    double bestInsertionCost = std::numeric_limits<double>::max();
+    
+    // Para cada vehículo en la lista de vehículos (líneas 3-9 del Algoritmo 3)
+    for (auto& vehicle : vehicles) {
+        // Comprobar si el vehículo puede aceptar la tarea
         if (vehicle.canAcceptTask(task)) {
-            double travelTime = calculateTravelTime(vehicle.getCurrentLocation(), task.getTransferStation().getLocation());
-            if (travelTime < minTime) {
-                minTime = travelTime;
-                bestVehicle = vehicle;
+            // Calcular el costo de inserción (línea 4)
+            // En este caso, usar la distancia/tiempo desde la ubicación actual hasta la estación de transferencia
+            double cost = calculateTravelTime(
+                vehicle.getCurrentLocation(), 
+                task.getTransferStation().getLocation()
+            );
+            
+            // Si el costo es mejor que el mejor encontrado hasta ahora (líneas 5-8)
+            if (cost < bestInsertionCost) {
+                selectedVehicle = &vehicle;
+                bestInsertionCost = cost;
             }
         }
     }
-
-    return bestVehicle;
+    
+    // Devolver el vehículo seleccionado o nullptr si no se encontró ninguno
+    return selectedVehicle;
 }

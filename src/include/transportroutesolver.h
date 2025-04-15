@@ -20,10 +20,10 @@ public:
     double calculateTravelTime(const Location& from, const Location& to) const;
     // Método para encontrar la estación de transferencia más cercana
     TransferStation findClosestTransferStation(const Location& currentLocation) const;
-    TransportationVehicle selectBestVehicle(const std::vector<TransportationVehicle>& vehicles, const Task& task) const;
+    TransportationVehicle* selectBestVehicle(std::vector<TransportationVehicle>& vehicles, const Task& task) const;
 private:
   ProblemInstance& problem_;
-  Solution& solution;
+  Solution& solution_;
   std::vector<Task> tasks_;
   double vehicleTravelSpeed_;
   double vehicleCapacity_;

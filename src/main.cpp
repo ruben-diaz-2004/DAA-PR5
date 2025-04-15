@@ -15,6 +15,8 @@
 #include "include/reinsertinter.h"
 #include "include/twoopt.h"
 #include "include/rvnd.h"
+#include "include/transportationvehicle.h"
+#include "include/transportroutesolver.h"
 
 int main(int argc, char* argv[]) {
   // Check if input file is provided
@@ -121,7 +123,7 @@ int main(int argc, char* argv[]) {
   std::cout << "RESULTADO," << filename << "," << num_vehicles << "," << total_time << "," << cpu_time << std::endl;
 
   // Imprimir las tareas guardadas en solution
-  solution.buildTasks(instance);
+  // solution.buildTasks(instance);
   std::cout << "Total tasks: " << solution.getTasks().size() << std::endl;
   std::cout << "Tasks:" << std::endl;
   for (const auto& task: solution.getTasks()) {
@@ -129,5 +131,20 @@ int main(int argc, char* argv[]) {
               << ", Waste Amount: " << task.getWasteAmount() 
               << ", Arrival Time: " << task.getArrivalTime() << std::endl;
   }
+
+  // Calcular las rutas de transporte
+  TransportRouteSolver transportSolver(instance, solution);
+  std::vector<TransportationVehicle> transportRoutes = transportSolver.constructTransportRoutes();
+  std::cout << "Transport routes:" << std::endl;
+  for (const auto& vehicle : transportRoutes) {
+    std::cout << "Vehicle ID: " << vehicle.getId() << ", Remaining time: " << vehicle.getRemainingTime() << ", Route: ";
+    for (const auto& loc : vehicle.getRoute()) {
+      std::cout << loc.getId() << " ";
+    }
+    std::cout << std::endl;
+  }
+  std::cout << "Total transport time: " << transportSolver.calculateTotalTransportTime(transportRoutes) << std::endl;
+  std::cout << "Total transport routes: " << transportRoutes.size() << std::endl;
+  std::cout << "Landfill location: " << instance.landfill().getLocation().getId() << instance.landfill().getLocation().getX() << ", " << instance.landfill().getLocation().getY() << std::endl;
   return 0;
 }
