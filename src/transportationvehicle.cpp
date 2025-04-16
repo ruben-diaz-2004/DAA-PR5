@@ -61,20 +61,23 @@ bool TransportationVehicle::canAcceptTask(const Task& task) const {
     // Para verificar esta condición, necesitamos:
     // 1. Calcular el tiempo de viaje desde la ubicación actual hasta la estación de transferencia de la tarea
     double travelTimeToTask = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60;
+    double timeBetweenTasks = 0;
+    if (!assignedTasks.empty()) {
+        timeBetweenTasks = task.getArrivalTime() - assignedTasks.back().getArrivalTime();
+    }
     
     // 2. Estimar el tiempo para volver al vertedero desde la estación de transferencia de la tarea
     // (idealmente, la ubicación del vertedero debería ser pasada como parámetro o almacenada en la clase)
     Location landfillLocation(10, 60, 0); // Reemplazar con la ubicación real del vertedero
     double timeToReturnToLandfill = task.getTransferStation().getLocation().distanceTo(landfillLocation) / vehicleTravelSpeed * 60;
+    // std::cout << "Time to return to landfill: " << timeToReturnToLandfill << " minutes" << std::endl;
     
     // 3. Verificar si hay suficiente tiempo restante para:
     //    - Viajar a la tarea
-    //    - Servir la tarea (asumimos un tiempo de servicio)
     //    - Volver al vertedero
-    double serviceTime = 15.0; // Tiempo estimado para servir la tarea (ajustar según sea necesario)
     
     // Tiempo total necesario para completar la tarea y volver al vertedero
-    double totalTimeNeeded = travelTimeToTask + serviceTime + timeToReturnToLandfill;
+    double totalTimeNeeded = timeBetweenTasks + travelTimeToTask + timeToReturnToLandfill;
     
     // Verificar condición (c)
     if (totalTimeNeeded > remainingTime) {
@@ -94,14 +97,13 @@ void TransportationVehicle::addTask(const Task& task) {
     
     // Calcular el tiempo de viaje desde la ubicación actual hasta la estación de transferencia de la tarea
     double travelTime = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60;
-    
-    // Tiempo de servicio estimado
-    double serviceTime = 15.0; // minutos
+    std::cout << "Travel time to task: " << travelTime << " minutes" << std::endl;
     
     // Actualizar el tiempo restante
     remainingTime -= travelTime; // Tiempo para llegar a la tarea
-    remainingTime -= serviceTime; // Tiempo para servir la tarea
-    
+    if (!assignedTasks.empty()) {
+        remainingTime -= task.getArrivalTime() - assignedTasks.back().getArrivalTime(); // Tiempo entre tareas
+    }
     // Añadir la tarea a la lista de tareas asignadas
     assignedTasks.push_back(task);
     
@@ -110,6 +112,7 @@ void TransportationVehicle::addTask(const Task& task) {
     
     // Actualizar la carga actual
     addLoad(task.getWasteAmount());
+    std::cout << "Time remaining after adding task: " << remainingTime << " minutes" << std::endl;
 }
 
 // Add a location to the route
