@@ -53,18 +53,18 @@ int main(int argc, char* argv[]) {
       // std::cout << "Total time after local search: " << total_time << std::endl;
 
       // std::cout << "Local search algorithm selected." << std::endl;
-      // SwapIntra inter(instance, solution);
+      // ReinsertInter inter(instance, solution);
       // inter.runLocalSearch();
       // total_time = solution.getTotalTime();
       // std::cout << "Local search completed." << std::endl;
       // std::cout << "Total time after local search: " << total_time << std::endl;
 
-      // RVND rvnd(instance, solution);
-      // rvnd.RunVND();
-      // num_vehicles = solution.getNumVehicles();
-      // total_time = solution.getTotalTime();
-      // std::cout << "RVND algorithm completed." << std::endl;
-      // std::cout << "Total time after RVND: " << total_time << std::endl;
+      RVND rvnd(instance, solution);
+      rvnd.RunVND();
+      num_vehicles = solution.getNumVehicles();
+      total_time = solution.getTotalTime();
+      std::cout << "RVND algorithm completed." << std::endl;
+      std::cout << "Total time after RVND: " << total_time << std::endl;
 
       // Print the route
       std::cout << "Greedy route: ";
@@ -123,7 +123,7 @@ int main(int argc, char* argv[]) {
   std::cout << "RESULTADO," << filename << "," << num_vehicles << "," << total_time << "," << cpu_time << std::endl;
 
   // Imprimir las tareas guardadas en solution
-  // solution.buildTasks(instance);
+  solution.buildTasks(instance);
   std::cout << "Total tasks: " << solution.getTasks().size() << std::endl;
   std::cout << "Tasks:" << std::endl;
   for (const auto& task: solution.getTasks()) {

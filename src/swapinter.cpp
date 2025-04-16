@@ -9,7 +9,7 @@ void SwapInter::runLocalSearch() {
     const double IMPROVEMENT_THRESHOLD = 0.0001;
 
     std::vector<CollectionVehicle> routes = solution.getCollectionRoutes();
-    std::cout << "Initial total time: " << solution.getTotalTime() << std::endl;
+    // std::cout << "Initial total time: " << solution.getTotalTime() << std::endl;
 
     while (improvementFound) {
         improvementFound = false;
@@ -45,21 +45,21 @@ void SwapInter::runLocalSearch() {
 
                             double improvement = (oldTime1 + oldTime2) - (time1 + time2);
                             if (improvement > IMPROVEMENT_THRESHOLD) {
-                                std::cout << "Improvement found between route " << i 
+                                std::cout << "SwapInter Improvement found between route " << i 
                                           << " and route " << j 
                                           << "! Time improvement: " << improvement << std::endl;
 
                                 // Mostrar rutas antiguas y nuevas para depurar
-                                std::cout << "Old Route " << i << ": ";
-                                for (const auto& loc : route1) std::cout << loc.getId() << " ";
-                                std::cout << "\nNew Route " << i << ": ";
-                                for (const auto& loc : newRoute1) std::cout << loc.getId() << " ";
+                                // std::cout << "Old Route " << i << ": ";
+                                // for (const auto& loc : route1) std::cout << loc.getId() << " ";
+                                // std::cout << "\nNew Route " << i << ": ";
+                                // for (const auto& loc : newRoute1) std::cout << loc.getId() << " ";
 
-                                std::cout << "\nOld Route " << j << ": ";
-                                for (const auto& loc : route2) std::cout << loc.getId() << " ";
-                                std::cout << "\nNew Route " << j << ": ";
-                                for (const auto& loc : newRoute2) std::cout << loc.getId() << " ";
-                                std::cout << std::endl;
+                                // std::cout << "\nOld Route " << j << ": ";
+                                // for (const auto& loc : route2) std::cout << loc.getId() << " ";
+                                // std::cout << "\nNew Route " << j << ": ";
+                                // for (const auto& loc : newRoute2) std::cout << loc.getId() << " ";
+                                // std::cout << std::endl;
 
                                 // Actualizar rutas
                                 routes[i].setRoute(newRoute1);
@@ -86,5 +86,4 @@ void SwapInter::runLocalSearch() {
     }
 
     solution.setCollectionRoutes(routes);
-    std::cout << "Final total time after inter-route swap: " << solution.getTotalTime() << std::endl;
 }

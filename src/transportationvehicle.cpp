@@ -10,7 +10,8 @@ TransportationVehicle::TransportationVehicle() :
     currentLoad(0), 
     maxRouteDuration(0), 
     remainingTime(0),
-    currentLocation(Location(0,0,0))
+    currentLocation(Location(0,0,0)),
+    vehicleTravelSpeed(30) // Initialize travel speed
 {}
 
 // Parameterized constructor
@@ -24,7 +25,8 @@ TransportationVehicle::TransportationVehicle(
     currentLoad(0), 
     maxRouteDuration(maxTime),
     remainingTime(maxTime),
-    currentLocation(Location(0,0,0))
+    currentLocation(Location(0,0,0)),
+    vehicleTravelSpeed(30) // Initialize travel speed
 {}
 
 // Check if vehicle can accept a task
@@ -34,10 +36,15 @@ bool TransportationVehicle::canAcceptTask(const Task& task) const {
         return false;
     }
 
+    // Calculate travel time to task location
+    double travelTime = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60; // Convert to minutes
+    if (travelTime > remainingTime) {
+        return false;
+    }
+
     // If there are already assigned tasks, check time constraints
     if (!assignedTasks.empty()) {
         const Task& lastTask = assignedTasks.back();
-        double travelTime = currentLocation.distanceTo(task.getTransferStation().getLocation());
         
         // Check if there's enough time between last task and new task
         if (task.getArrivalTime() - lastTask.getArrivalTime() < travelTime) {
@@ -53,7 +60,13 @@ void TransportationVehicle::addTask(const Task& task) {
     if (!canAcceptTask(task)) {
         throw std::runtime_error("Cannot accept task");
     }
-
+    // Calculate travel time from current location to task location
+    double travelTime = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60; // Convert to minutes
+    // Deduct travel time from remaining time
+    if (!assignedTasks.empty()) {
+        remainingTime -= (task.getArrivalTime() - assignedTasks.back().getArrivalTime());
+    }
+    remainingTime -= travelTime;
     assignedTasks.push_back(task);
     addLocation(task.getTransferStation().getLocation());
     addLoad(task.getWasteAmount());
@@ -67,6 +80,12 @@ void TransportationVehicle::addLocation(const Location& location) {
 
 // Return to landfill
 void TransportationVehicle::returnToLandfill(const Location& landfillLocation) {
+    // Calculate travel time to landfill
+    double travelTime = currentLocation.distanceTo(landfillLocation) / vehicleTravelSpeed * 60;
+    
+    // Deduct travel time
+    remainingTime -= travelTime;
+    
     addLocation(landfillLocation);
     clearLoad();
 }
@@ -103,5 +122,13 @@ double TransportationVehicle::calculateTotalDistance() const {
 
 // Get remaining route time
 double TransportationVehicle::getRemainingTime() const {
+    // Calcula el tiempo restante basado en la diferencia entre el momento de llegada de la primera tarea y el de la última
+    // if (assignedTasks.empty()) {
+    //     return maxRouteDuration;
+    // }
+    // double totalTime = 0;
+    // totalTime += assignedTasks.back().getArrivalTime() - assignedTasks.front().getArrivalTime();
+    // totalTime += calculateTotalDistance() / vehicleTravelSpeed * 60; // Convertir a minutos
+    // return maxRouteDuration - totalTime;
     return remainingTime;
 }

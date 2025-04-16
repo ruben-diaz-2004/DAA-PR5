@@ -29,7 +29,7 @@ private:
     Location currentLocation;
     std::vector<Location> route;
     std::vector<Task> assignedTasks;
-
+    double vehicleTravelSpeed;
 public:
     // Constructors
     TransportationVehicle();

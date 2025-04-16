@@ -8,7 +8,7 @@ void TwoOpt::runLocalSearch() {
   bool improvementFound = true;
     const double IMPROVEMENT_THRESHOLD = 0.0001;
     std::vector<CollectionVehicle> routes = solution.getCollectionRoutes();
-    std::cout << "Initial time: " << solution.getTotalTime() << std::endl;
+    // std::cout << "Initial time: " << solution.getTotalTime() << std::endl;
 
     while (improvementFound) {
         improvementFound = false;
@@ -47,7 +47,7 @@ void TwoOpt::runLocalSearch() {
                             double improvement = oldTotal - newTotal;
 
                             if (improvement > IMPROVEMENT_THRESHOLD) {
-                                std::cout << "Improvement found between routes " << r1 << " and " << r2
+                                std::cout << "TwoOpt Improvement found between routes " << r1 << " and " << r2
                                           << "! Old total: " << oldTotal << " New total: " << newTotal 
                                           << " (Improvement: " << improvement << ")" << std::endl;
 
@@ -77,6 +77,4 @@ void TwoOpt::runLocalSearch() {
     }
   // Actualizar la solución
   solution.setCollectionRoutes(routes);
-  std::cout << "Final time after TwoOptInter: " << solution.getTotalTime() << std::endl;
-
 }

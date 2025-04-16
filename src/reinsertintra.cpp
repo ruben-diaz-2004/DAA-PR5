@@ -8,7 +8,7 @@ void ReinsertIntra::runLocalSearch() {
     bool improvementFound = true;
     const double IMPROVEMENT_THRESHOLD = 0.0001;
     std::vector<CollectionVehicle> routes = solution.getCollectionRoutes();
-    std::cout << "Initial time: " << solution.getTotalTime() << std::endl;
+    // std::cout << "Initial time: " << solution.getTotalTime() << std::endl;
 
     while (improvementFound) {
         improvementFound = false;
@@ -44,19 +44,19 @@ void ReinsertIntra::runLocalSearch() {
     
                         double improvement = oldTimeUsed - timeUsed;
                         if (improvement > IMPROVEMENT_THRESHOLD) {
-                            std::cout << "Improvement found! Old route time: " << oldTimeUsed 
+                            std::cout << "ReinsertIntra Improvement found! Old route time: " << oldTimeUsed 
                                       << " New route time: " << timeUsed 
                                       << " (Improvement: " << improvement << ")" << std::endl;
-                            std::cout << "Old Route IDs: ";
-                            for (const auto& loc : currentRoute) {
-                                std::cout << loc.getId() << " ";
-                            }
-                            std::cout << std::endl;
-                            std::cout << "New Route IDs: ";
-                            for (const auto& loc : newRoute) {
-                                std::cout << loc.getId() << " ";
-                            }
-                            std::cout << std::endl;
+                            // std::cout << "Old Route IDs: ";
+                            // for (const auto& loc : currentRoute) {
+                            //     std::cout << loc.getId() << " ";
+                            // }
+                            // std::cout << std::endl;
+                            // std::cout << "New Route IDs: ";
+                            // for (const auto& loc : newRoute) {
+                            //     std::cout << loc.getId() << " ";
+                            // }
+                            // std::cout << std::endl;
                             
                             // Actualizamos la ruta con la mejora encontrada
                             routes[routeIndex].setRoute(newRoute);
@@ -80,5 +80,4 @@ void ReinsertIntra::runLocalSearch() {
     }
     // Update the solution with the new routes
     solution.setCollectionRoutes(routes);
-    std::cout << "Final time after local search: " << solution.getTotalTime() << std::endl;
 }

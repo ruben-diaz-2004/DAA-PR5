@@ -9,7 +9,7 @@ void ReinsertInter::runLocalSearch() {
     const double IMPROVEMENT_THRESHOLD = 0.0001;
 
     std::vector<CollectionVehicle> routes = solution.getCollectionRoutes();
-    std::cout << "Initial total time: " << solution.getTotalTime() << std::endl;
+    // std::cout << "Initial total time: " << solution.getTotalTime() << std::endl;
 
     while (improvementFound) {
         improvementFound = false;
@@ -30,7 +30,7 @@ void ReinsertInter::runLocalSearch() {
                     std::vector<Location> newRouteFrom = routeFrom;
                     newRouteFrom.erase(newRouteFrom.begin() + posFrom);
 
-                    for (size_t insertPos = 1; insertPos < routeTo.size(); ++insertPos) {
+                    for (size_t insertPos = 1; insertPos < routeTo.size() - 2; ++insertPos) {
                         std::vector<Location> newRouteTo = routeTo;
                         newRouteTo.insert(newRouteTo.begin() + insertPos, node);
 
@@ -47,7 +47,7 @@ void ReinsertInter::runLocalSearch() {
 
                             double improvement = (oldTimeFrom + oldTimeTo) - (timeFrom + timeTo);
                             if (improvement > IMPROVEMENT_THRESHOLD) {
-                                std::cout << "Improvement by reinserting node " << node.getId()
+                                std::cout << "ReinsertInter Improvement by reinserting node " << node.getId()
                                           << " from route " << i << " to route " << j
                                           << " at position " << insertPos
                                           << "! Time improvement: " << improvement << std::endl;
@@ -76,5 +76,4 @@ void ReinsertInter::runLocalSearch() {
     }
 
     solution.setCollectionRoutes(routes);
-    std::cout << "Final total time after reinsertion: " << solution.getTotalTime() << std::endl;
 }
