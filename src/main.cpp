@@ -17,6 +17,7 @@
 #include "include/rvnd.h"
 #include "include/transportationvehicle.h"
 #include "include/transportroutesolver.h"
+#include "include/multistart.h"
 
 int main(int argc, char* argv[]) {
   // Check if input file is provided
@@ -100,6 +101,16 @@ int main(int argc, char* argv[]) {
       std::cout << "Local search completed." << std::endl;
       std::cout << "Total time after local search: " << total_time << std::endl;
 
+      break;
+    }
+    case 3: {
+      std::cout << "Multi-start algorithm selected." << std::endl;
+      MultiStart multiStart(instance, options.graspN, options.iterations, solution);
+      multiStart.run();
+      num_vehicles = solution.getNumVehicles();
+      total_time = solution.getTotalTime();
+      std::cout << "Multi-start algorithm completed." << std::endl;
+      std::cout << "Total time after multi-start: " << total_time << std::endl;
       break;
     }
     default: {

@@ -5,17 +5,15 @@
 
 void MultiStart::run() {
     // Initialize the best solution
-    Solution bestSolution = solution;
     double bestCost = std::numeric_limits<double>::max();
     int bestNumVehicles = std::numeric_limits<int>::max();
     RVND rvnd(instance, solution);
     TransportRouteSolver transportSolver(instance, solution);
+    GraspRoutingSolver graspSolver(instance, graspN, 1, solution);
 
     // Run the GRASP algorithm for a number of iterations
     for (int i = 0; i < iterations; ++i) {
-        // Create a new GRASP solver instance
-        GraspRoutingSolver graspSolver(instance, graspN, 1, solution);
-        
+        Solution backupSolution = solution;
         // Construct the collection routes using GRASP
         std::vector<CollectionVehicle> graspRoutes = graspSolver.constructCollectionRoutes();
         
@@ -31,9 +29,11 @@ void MultiStart::run() {
         int numVehicles = solution.getNumVehicles();
         double totalTime = solution.getTotalTime();
         if (numVehicles < bestNumVehicles || (numVehicles == bestNumVehicles && totalTime < bestCost)) {
-            bestSolution = solution;
             bestCost = totalTime;
             bestNumVehicles = numVehicles;
+        } else {
+            // If not, revert to the backup solution
+            solution = backupSolution;
         }
         // Print the current iteration results
         std::cout << "Iteration " << i + 1 << ": "
@@ -43,7 +43,4 @@ void MultiStart::run() {
                   << ", Best Vehicles: " << bestNumVehicles 
                   << std::endl;
     }
-
-    // Update the original solution with the best one found
-    solution = bestSolution;
 }

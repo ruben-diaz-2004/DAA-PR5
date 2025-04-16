@@ -18,7 +18,7 @@
 
 
 struct parameters {
-  int algorithm = 0;     // 0: no algorithm selected, 1: greedy, 2: grasp
+  int algorithm = 3;     // 0: no algorithm selected, 1: greedy, 2: grasp
   int graspN = 3;        // Default value for graspN (candidatos)
   int iterations = 1000;  // Default number of GRASP iterations
 };
