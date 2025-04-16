@@ -31,44 +31,84 @@ TransportationVehicle::TransportationVehicle(
 
 // Check if vehicle can accept a task
 bool TransportationVehicle::canAcceptTask(const Task& task) const {
-    // Check if task waste fits in remaining capacity
+    // Condición (b): La capacidad restante del vehículo debe ser mayor o igual a la cantidad de residuos
     if (task.getWasteAmount() > getRemainingCapacity()) {
         return false;
     }
-
-    // Calculate travel time to task location
-    double travelTime = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60; // Convert to minutes
-    if (travelTime > remainingTime) {
-        return false;
-    }
-
-    // If there are already assigned tasks, check time constraints
+    
+    // Si la ruta ya tiene tareas asignadas
     if (!assignedTasks.empty()) {
+        // Condición (a): Si h' es la última tarea asignada a e, entonces el tiempo de viaje desde sh' hasta sh
+        // debe ser menor o igual a la diferencia τh - τh'
         const Task& lastTask = assignedTasks.back();
         
-        // Check if there's enough time between last task and new task
-        if (task.getArrivalTime() - lastTask.getArrivalTime() < travelTime) {
+        // Calcular tiempo de viaje entre la estación de transferencia de la última tarea y la nueva
+        double travelTimeBetweenStations = lastTask.getTransferStation().getLocation().distanceTo(
+            task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60; // Convertir a minutos
+        
+        // Calcular la diferencia de tiempos de llegada
+        double arrivalTimeDifference = task.getArrivalTime() - lastTask.getArrivalTime();
+        
+        // Verificar condición (a)
+        if (travelTimeBetweenStations > arrivalTimeDifference) {
             return false;
         }
     }
-
+    
+    // Condición (c): La duración total de la ruta, considerando el regreso al vertedero,
+    // no debe exceder un umbral L'
+    
+    // Para verificar esta condición, necesitamos:
+    // 1. Calcular el tiempo de viaje desde la ubicación actual hasta la estación de transferencia de la tarea
+    double travelTimeToTask = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60;
+    
+    // 2. Estimar el tiempo para volver al vertedero desde la estación de transferencia de la tarea
+    // (idealmente, la ubicación del vertedero debería ser pasada como parámetro o almacenada en la clase)
+    Location landfillLocation(10, 60, 0); // Reemplazar con la ubicación real del vertedero
+    double timeToReturnToLandfill = task.getTransferStation().getLocation().distanceTo(landfillLocation) / vehicleTravelSpeed * 60;
+    
+    // 3. Verificar si hay suficiente tiempo restante para:
+    //    - Viajar a la tarea
+    //    - Servir la tarea (asumimos un tiempo de servicio)
+    //    - Volver al vertedero
+    double serviceTime = 15.0; // Tiempo estimado para servir la tarea (ajustar según sea necesario)
+    
+    // Tiempo total necesario para completar la tarea y volver al vertedero
+    double totalTimeNeeded = travelTimeToTask + serviceTime + timeToReturnToLandfill;
+    
+    // Verificar condición (c)
+    if (totalTimeNeeded > remainingTime) {
+        return false;
+    }
+    
+    // Si todas las condiciones se cumplen, el vehículo puede aceptar la tarea
     return true;
 }
 
 // Add a task to the vehicle
 void TransportationVehicle::addTask(const Task& task) {
+    // Verificar si podemos aceptar la tarea
     if (!canAcceptTask(task)) {
         throw std::runtime_error("Cannot accept task");
     }
-    // Calculate travel time from current location to task location
-    double travelTime = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60; // Convert to minutes
-    // Deduct travel time from remaining time
-    if (!assignedTasks.empty()) {
-        remainingTime -= (task.getArrivalTime() - assignedTasks.back().getArrivalTime());
-    }
-    remainingTime -= travelTime;
+    
+    // Calcular el tiempo de viaje desde la ubicación actual hasta la estación de transferencia de la tarea
+    double travelTime = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60;
+    
+    // Tiempo de servicio estimado
+    double serviceTime = 15.0; // minutos
+    
+    // Actualizar el tiempo restante
+    remainingTime -= travelTime; // Tiempo para llegar a la tarea
+    remainingTime -= serviceTime; // Tiempo para servir la tarea
+    
+    // Añadir la tarea a la lista de tareas asignadas
     assignedTasks.push_back(task);
+    
+    // Actualizar la ubicación actual y la ruta
     addLocation(task.getTransferStation().getLocation());
+    
+    // Actualizar la carga actual
     addLoad(task.getWasteAmount());
 }
 
@@ -80,13 +120,16 @@ void TransportationVehicle::addLocation(const Location& location) {
 
 // Return to landfill
 void TransportationVehicle::returnToLandfill(const Location& landfillLocation) {
-    // Calculate travel time to landfill
+    // Calcular el tiempo de viaje desde la ubicación actual hasta el vertedero
     double travelTime = currentLocation.distanceTo(landfillLocation) / vehicleTravelSpeed * 60;
     
-    // Deduct travel time
+    // Actualizar el tiempo restante
     remainingTime -= travelTime;
     
+    // Añadir el vertedero a la ruta
     addLocation(landfillLocation);
+    
+    // Vaciar la carga
     clearLoad();
 }
 
