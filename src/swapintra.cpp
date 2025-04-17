@@ -41,9 +41,9 @@ void SwapIntra::runLocalSearch() {
                     // If better (by at least the threshold), update the solution
                     double improvement = oldTimeUsed - timeUsed;
                     if (improvement > IMPROVEMENT_THRESHOLD) {
-                        std::cout << "SwapIntra Improvement found! Old route time: " << oldTimeUsed 
-                                  << " New route time: " << timeUsed 
-                                  << " (Improvement: " << improvement << ")" << std::endl;
+                        // std::cout << "SwapIntra Improvement found! Old route time: " << oldTimeUsed 
+                        //           << " New route time: " << timeUsed 
+                        //           << " (Improvement: " << improvement << ")" << std::endl;
                         // std::cout << "Old Route IDs: ";
                         // for (const auto& loc : currentRoute) {
                         //     std::cout << loc.getId() << " ";
@@ -55,12 +55,12 @@ void SwapIntra::runLocalSearch() {
                         // }
                         // std::cout << std::endl;
                         // Update the route in our collection
-                        std::cout << routes[routeIndex].getRemainingTime() << std::endl;
+                        // std::cout << routes[routeIndex].getRemainingTime() << std::endl;
                         routes[routeIndex].setRoute(newRoute);
                         routes[routeIndex].subtractRemainingTime(-improvement);
                         routes[routeIndex].resetLoad();
                         routes[routeIndex].addLoad(finalLoad);
-                        std::cout << routes[routeIndex].getRemainingTime() << std::endl;
+                        // std::cout << routes[routeIndex].getRemainingTime() << std::endl;
                         
                         improvementFound = true;
 

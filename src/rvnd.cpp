@@ -31,7 +31,7 @@ void RVND::RunVND()  {
           localSearchUsed[0] = true;
           break;
         case 1:
-          //inter.runLocalSearch();
+          inter.runLocalSearch();
           localSearchUsed[1] = true;
           break;
         case 2:
@@ -43,7 +43,7 @@ void RVND::RunVND()  {
           localSearchUsed[3] = true;
           break;
         case 4:
-          //twoOpt.runLocalSearch();
+          twoOpt.runLocalSearch();
           localSearchUsed[4] = true;
           break;
       }

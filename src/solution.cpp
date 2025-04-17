@@ -31,8 +31,11 @@ void Solution::buildTasks(const ProblemInstance& problem) {
       for (const auto& station : transferStations) {
         if (station.getId() == route[i + 1].getId()) {
           // Create a task for the current vehicle
-          Task task(currentWaste, station, currentTime);
-          tasks_.push_back(task);
+          if (currentWaste > 0.0) {
+            // Create a task with the current waste and transfer station
+            Task task(currentWaste, station, currentTime);
+            tasks_.push_back(task);
+          }
           currentWaste = 0.0; // Reset waste after transferring
           break;
         }

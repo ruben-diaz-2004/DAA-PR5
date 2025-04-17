@@ -44,9 +44,9 @@ void ReinsertIntra::runLocalSearch() {
     
                         double improvement = oldTimeUsed - timeUsed;
                         if (improvement > IMPROVEMENT_THRESHOLD) {
-                            std::cout << "ReinsertIntra Improvement found! Old route time: " << oldTimeUsed 
-                                      << " New route time: " << timeUsed 
-                                      << " (Improvement: " << improvement << ")" << std::endl;
+                            // std::cout << "ReinsertIntra Improvement found! Old route time: " << oldTimeUsed 
+                            //           << " New route time: " << timeUsed 
+                            //           << " (Improvement: " << improvement << ")" << std::endl;
                             // std::cout << "Old Route IDs: ";
                             // for (const auto& loc : currentRoute) {
                             //     std::cout << loc.getId() << " ";

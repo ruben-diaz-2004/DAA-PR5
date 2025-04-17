@@ -45,9 +45,9 @@ void SwapInter::runLocalSearch() {
 
                             double improvement = (oldTime1 + oldTime2) - (time1 + time2);
                             if (improvement > IMPROVEMENT_THRESHOLD) {
-                                std::cout << "SwapInter Improvement found between route " << i 
-                                          << " and route " << j 
-                                          << "! Time improvement: " << improvement << std::endl;
+                                // std::cout << "SwapInter Improvement found between route " << i 
+                                //           << " and route " << j 
+                                //           << "! Time improvement: " << improvement << std::endl;
 
                                 // Mostrar rutas antiguas y nuevas para depurar
                                 // std::cout << "Old Route " << i << ": ";

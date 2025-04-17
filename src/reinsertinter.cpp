@@ -47,10 +47,10 @@ void ReinsertInter::runLocalSearch() {
 
                             double improvement = (oldTimeFrom + oldTimeTo) - (timeFrom + timeTo);
                             if (improvement > IMPROVEMENT_THRESHOLD) {
-                                std::cout << "ReinsertInter Improvement by reinserting node " << node.getId()
-                                          << " from route " << i << " to route " << j
-                                          << " at position " << insertPos
-                                          << "! Time improvement: " << improvement << std::endl;
+                                // std::cout << "ReinsertInter Improvement by reinserting node " << node.getId()
+                                //           << " from route " << i << " to route " << j
+                                //           << " at position " << insertPos
+                                //           << "! Time improvement: " << improvement << std::endl;
 
                                 routes[i].setRoute(newRouteFrom);
                                 routes[i].resetLoad();

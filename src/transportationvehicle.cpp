@@ -97,7 +97,7 @@ void TransportationVehicle::addTask(const Task& task) {
     
     // Calcular el tiempo de viaje desde la ubicación actual hasta la estación de transferencia de la tarea
     double travelTime = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60;
-    std::cout << "Travel time to task: " << travelTime << " minutes" << std::endl;
+    // std::cout << "Travel time to task: " << travelTime << " minutes" << std::endl;
     
     // Actualizar el tiempo restante
     remainingTime -= travelTime; // Tiempo para llegar a la tarea
@@ -112,7 +112,7 @@ void TransportationVehicle::addTask(const Task& task) {
     
     // Actualizar la carga actual
     addLoad(task.getWasteAmount());
-    std::cout << "Time remaining after adding task: " << remainingTime << " minutes" << std::endl;
+    // std::cout << "Time remaining after adding task: " << remainingTime << " minutes" << std::endl;
 }
 
 // Add a location to the route
