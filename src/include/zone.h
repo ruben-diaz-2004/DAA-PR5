@@ -20,19 +20,19 @@
 class Location;
 
 class Zone {
-private:
-  int id;
-  Location location;
-  double wasteQuantity;
-  double time_;
-
 public:
-  Zone(int id, const Location& loc, double waste, double time) : id(id), location(loc), wasteQuantity(waste), time_(time) {}
+  Zone(int id, const Location& loc, double waste, double time) : id_(id), location_(loc), wasteQuantity_(waste), time_(time) {}
 
-  int getId() const { return id; }
-  Location getLocation() const { return location; }
-  double getWasteQuantity() const { return wasteQuantity; }
+  int getId() const { return id_; }
+  Location getLocation() const { return location_; }
+  double getWasteQuantity() const { return wasteQuantity_; }
   double getTime() const { return time_; }
+
+private:
+  int id_;
+  Location location_;
+  double wasteQuantity_;
+  double time_;
 };
 
 #endif

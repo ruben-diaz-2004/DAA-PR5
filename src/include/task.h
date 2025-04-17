@@ -16,27 +16,27 @@
 #include "transferStation.h"
 
 class Task {
-private:
-    double wasteAmount;       // Amount of waste to transport
-    TransferStation station;  // Transfer station associated with the task
-    double arrivalTime;       // Time of arrival at the transfer station
-
 public:
-    // Constructors
-    Task();
-    Task(double amount, const TransferStation& transferStation, double time);
+  // Constructors
+  Task();
+  Task(double amount, const TransferStation& transferStation, double time);
 
-    void printTask() const;
+  void printTask() const;
 
-    // Getters
-    double getWasteAmount() const;
-    const TransferStation& getTransferStation() const;
-    double getArrivalTime() const;
+  // Getters
+  double getWasteAmount() const;
+  const TransferStation& getTransferStation() const;
+  double getArrivalTime() const;
 
-    // Setters
-    void setWasteAmount(double amount);
-    void setTransferStation(const TransferStation& station);
-    void setArrivalTime(double time);
+  // Setters
+  void setWasteAmount(double amount);
+  void setTransferStation(const TransferStation& station);
+  void setArrivalTime(double time);
+
+private:
+  double wasteAmount_;       // Amount of waste to transport
+  TransferStation station_;  // Transfer station associated with the task
+  double arrivalTime_;       // Time of arrival at the transfer station
 };
 
 #endif // TASK_H

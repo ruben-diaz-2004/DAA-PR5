@@ -22,16 +22,16 @@
 class Location;
 
 class TransferStation {
-private:
-  int id;
-  Location location;
-
 public:
-  TransferStation() : id(0), location(Location(0,0,0)) {}
-  TransferStation(int stationId, const Location& loc) : id(stationId), location(loc) {}
+  TransferStation() : id_(0), location_(Location(0,0,0)) {}
+  TransferStation(int stationId, const Location& loc) : id_(stationId), location_(loc) {}
 
-  Location getLocation() const { return location; }
-  int getId() const { return id; }
+  Location getLocation() const { return location_; }
+  int getId() const { return id_; }
+
+private:
+  int id_;
+  Location location_;
 };
     
 

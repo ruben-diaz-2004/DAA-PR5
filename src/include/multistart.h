@@ -10,15 +10,15 @@
 
 class MultiStart {
 public:
-    MultiStart(ProblemInstance& instance, int graspN, int iterations, Solution& solution)
-        : instance(instance), graspN(graspN), iterations(iterations), solution(solution) {}
-    void run();
+  MultiStart(ProblemInstance& instance, int graspN, int iterations, Solution& solution)
+      : instance(instance), graspN(graspN), iterations(iterations), solution(solution) {}
+  void run();
 
 private:
-    ProblemInstance& instance;
-    int graspN;
-    int iterations;
-    Solution& solution;
+  ProblemInstance& instance;
+  int graspN;
+  int iterations;
+  Solution& solution;
 };
 
 

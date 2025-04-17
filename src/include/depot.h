@@ -1,14 +1,3 @@
-// Depot
-
-// Represents the starting/ending point for vehicles
-// Attributes:
-
-// location: Geographical coordinates
-// Methods:
-
-// CollectionVehicle createCollectionVehicle()
-// TransportationVehicle createTransportationVehicle()
-
 #ifndef DEPOT_H
 #define DEPOT_H
 
@@ -18,13 +7,13 @@
 #include "location.h"
 
 class Depot {
-private:
-    Location location;
-
 public:
-    Depot(const Location& loc = Location(0.0, 0.0, -1)) : location(loc) {}
+  Depot(const Location& loc = Location(0.0, 0.0, -1)) : location_(loc) {}
     
-    Location getLocation() const { return location; }
+  Location getLocation() const { return location_; }
+
+private:
+  Location location_;
 };
 
 #endif

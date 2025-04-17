@@ -1,15 +1,3 @@
-// CollectionVehicle (Inherits from Vehicle)
-
-// Represents small collection vehicles (CV)
-// Additional attributes:
-
-// currentRoute: Vector of zones and transfer stations visited
-// Methods:
-
-// bool canVisitZone(Zone zone)
-// void addZoneToRoute(Zone zone)
-// void transferToTransferStation(TransferStation station)
-
 
 #ifndef COLLECTION_VEHICLE_H
 #define COLLECTION_VEHICLE_H
@@ -22,51 +10,51 @@
 class Location;
 
 class CollectionVehicle {
-private:
-  int id;
-  double capacity;
-  double currentLoad = 0.0;
-  double remainingTime;
-  double speed;
-  std::vector<Location> route;
-
 public:
   CollectionVehicle(int vehicleId, double vehicleCapacity, double maxTime, double speed) : 
-      id(vehicleId), capacity(vehicleCapacity), remainingTime(maxTime), speed(speed) {}
+    id_(vehicleId), capacity_(vehicleCapacity), remainingTime_(maxTime), speed_(speed) {}
 
   void addLocation(const Location& loc) {
-      route.push_back(loc);
+    route_.push_back(loc);
   }
 
   void setRoute(const std::vector<Location>& newRoute) {
-      route = newRoute;
+    route_ = newRoute;
   }
 
   void setRemainingTime(double time) {
-      remainingTime = time;
+    remainingTime_ = time;
   }
 
   void addLoad(double wasteAmount) {
-      currentLoad += wasteAmount;
+    currentLoad_ += wasteAmount;
   }
 
   void subtractRemainingTime(double time) {
-      remainingTime -= time;
+    remainingTime_ -= time;
   }
 
   void resetLoad() {
-      currentLoad = 0.0;
+    currentLoad_ = 0.0;
   }
 
   Location getCurrentLocation() const {
-      return route.back();
+    return route_.back();
   }
 
-  int getId() const { return id; }
-  double getCurrentLoad() const { return currentLoad; }
-  double getRemainingCapacity() const { return capacity - currentLoad; }
-  double getRemainingTime() const { return remainingTime; }
-  std::vector<Location> getRoute() const { return route; }
+  int getId() const { return id_; }
+  double getCurrentLoad() const { return currentLoad_; }
+  double getRemainingCapacity() const { return capacity_ - currentLoad_; }
+  double getRemainingTime() const { return remainingTime_; }
+  std::vector<Location> getRoute() const { return route_; }
+
+private:
+  int id_;
+  double capacity_;
+  double currentLoad_ = 0.0;
+  double remainingTime_;
+  double speed_;
+  std::vector<Location> route_;
 };
 
 

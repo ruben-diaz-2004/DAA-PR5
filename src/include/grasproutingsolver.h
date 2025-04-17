@@ -8,14 +8,6 @@
 
 
 class GraspRoutingSolver : public RoutingSolver {
-private:
-  int graspN_;           // Número de candidatos para la selección GRASP
-  int iterations_;       // Número de iteraciones
-  Solution& solution_;   // Referencia a la solución final
-
-  // Método para calcular el tiempo total usado por los vehículos
-  double calculateTotalTime(const std::vector<CollectionVehicle>& routes) const;
-
 public:
   // Constructor
   GraspRoutingSolver(ProblemInstance& problemInstance, int graspN, int iterations, Solution& solution)
@@ -23,6 +15,14 @@ public:
 
   // Implementación del algoritmo GRASP
   std::vector<CollectionVehicle> constructCollectionRoutes() override;
+  
+private:
+  int graspN_;           // Número de candidatos para la selección GRASP
+  int iterations_;       // Número de iteraciones
+  Solution& solution_;   // Referencia a la solución final
+
+  // Método para calcular el tiempo total usado por los vehículos
+  double calculateTotalTime(const std::vector<CollectionVehicle>& routes) const;
 };
 
 #endif // GRASP_ROUTING_SOLVER_H

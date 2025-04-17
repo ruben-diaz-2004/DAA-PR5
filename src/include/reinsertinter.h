@@ -8,12 +8,12 @@
 
 class ReinsertInter : public LocalSearch {
 public:
-    // Constructor
-    ReinsertInter(ProblemInstance& problemInstance, Solution& solution)
-        : LocalSearch(problemInstance, solution) {}
+  // Constructor
+  ReinsertInter(ProblemInstance& problemInstance, Solution& solution)
+      : LocalSearch(problemInstance, solution) {}
 
-    // Method to execute the local search
-    void runLocalSearch() override;
+  // Method to execute the local search
+  void runLocalSearch() override;
 };
 
 #endif // REINSERTINTER_H

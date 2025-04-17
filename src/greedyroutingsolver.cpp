@@ -87,10 +87,10 @@ std::vector<CollectionVehicle> GreedyRoutingSolver::constructCollectionRoutes() 
     }
   }
   
-  std::cout << "Total routes: " << routes.size() << std::endl;
+  // std::cout << "Total routes: " << routes.size() << std::endl;
   solution_.setCollectionRoutes(routes);
   solution_.setTasks(tasks);
   
-  std::cout << "Greedy routing completed." << std::endl;
+  // std::cout << "Greedy routing completed." << std::endl;
   return routes;
 }

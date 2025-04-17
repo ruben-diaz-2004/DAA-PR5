@@ -8,12 +8,12 @@
 
 class SwapIntra : public LocalSearch {
 public:
-    // Constructor
-    SwapIntra(ProblemInstance& problemInstance, Solution& solution)
-        : LocalSearch(problemInstance, solution) {}
+  // Constructor
+  SwapIntra(ProblemInstance& problemInstance, Solution& solution)
+      : LocalSearch(problemInstance, solution) {}
 
-    // Método para ejecutar la búsqueda local
-    void runLocalSearch() override;
+  // Método para ejecutar la búsqueda local
+  void runLocalSearch() override;
 
 
 };

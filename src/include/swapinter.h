@@ -8,12 +8,12 @@
 
 class SwapInter : public LocalSearch {
 public:
-    // Constructor
-    SwapInter(ProblemInstance& problemInstance, Solution& solution)
-        : LocalSearch(problemInstance, solution) {}
+  // Constructor
+  SwapInter(ProblemInstance& problemInstance, Solution& solution)
+      : LocalSearch(problemInstance, solution) {}
 
-    // Method to execute the local search
-    void runLocalSearch() override;
+  // Method to execute the local search
+  void runLocalSearch() override;
 };
 
 #endif // SWAPINTER_H

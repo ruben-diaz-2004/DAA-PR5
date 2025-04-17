@@ -12,24 +12,24 @@
 #include "location.h"
 
 class Landfill {
-private:
-    int id;
-    Location location;
-    double totalWasteReceived;
-
 public:
-    // Constructors
-    Landfill();
-    Landfill(int landfillId, const Location& loc);
+  // Constructors
+  Landfill();
+  Landfill(int landfillId, const Location& loc);
 
-    // Getters
-    int getId() const;
-    Location getLocation() const;
-    double getTotalWasteReceived() const;
+  // Getters
+  int getId() const;
+  Location getLocation() const;
+  double getTotalWasteReceived() const;
 
-    // Waste management
-    void receiveWaste(double wasteAmount);
-    void resetTotalWasteReceived();
+  // Waste management
+  void receiveWaste(double wasteAmount);
+  void resetTotalWasteReceived();
+  
+private:
+  int id_;
+  Location location_;
+  double totalWasteReceived_;
 };
 
 #endif // LANDFILL_H

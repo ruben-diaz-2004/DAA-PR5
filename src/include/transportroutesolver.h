@@ -10,17 +10,18 @@
 
 class TransportRouteSolver {
 public:
-    TransportRouteSolver(ProblemInstance& problemInstance, Solution& solution);
+  TransportRouteSolver(ProblemInstance& problemInstance, Solution& solution);
 
-    // Método para construir rutas de transporte
-    std::vector<TransportationVehicle> constructTransportRoutes();
-    // Método para calcular el tiempo total de transporte
-    double calculateTotalTransportTime(const std::vector<TransportationVehicle>& routes) const;
-    // Método para calcular el tiempo de viaje entre dos ubicaciones
-    double calculateTravelTime(const Location& from, const Location& to) const;
-    // Método para encontrar la estación de transferencia más cercana
-    TransferStation findClosestTransferStation(const Location& currentLocation) const;
-    TransportationVehicle* selectBestVehicle(std::vector<TransportationVehicle>& vehicles, const Task& task) const;
+  // Método para construir rutas de transporte
+  std::vector<TransportationVehicle> constructTransportRoutes();
+  // Método para calcular el tiempo total de transporte
+  double calculateTotalTransportTime(const std::vector<TransportationVehicle>& routes) const;
+  // Método para calcular el tiempo de viaje entre dos ubicaciones
+  double calculateTravelTime(const Location& from, const Location& to) const;
+  // Método para encontrar la estación de transferencia más cercana
+  TransferStation findClosestTransferStation(const Location& currentLocation) const;
+  TransportationVehicle* selectBestVehicle(std::vector<TransportationVehicle>& vehicles, const Task& task) const;
+  
 private:
   ProblemInstance& problem_;
   Solution& solution_;

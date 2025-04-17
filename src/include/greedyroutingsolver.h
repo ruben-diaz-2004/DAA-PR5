@@ -8,9 +8,6 @@
 
 
 class GreedyRoutingSolver : public RoutingSolver {
-private:
-  Solution& solution_;
-
 public:
   // Constructor simplificado
   GreedyRoutingSolver(ProblemInstance& problemInstance, Solution& solution)
@@ -18,6 +15,9 @@ public:
   
   // Implementación del algoritmo voraz
   std::vector<CollectionVehicle> constructCollectionRoutes() override;
+  
+private:
+  Solution& solution_;
 };
 
 #endif // GREEDY_ROUTING_SOLVER_H

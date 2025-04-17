@@ -9,7 +9,7 @@
 #include "probleminstance.h"
 
 class Solution {
-  public:
+public:
   Solution() = default;
   Solution(const std::vector<CollectionVehicle>& collectionRoutes, const std::vector<Task>& tasks, const std::vector<TransportationVehicle>& transportationVehicles)
       : collectionRoutes_(collectionRoutes), tasks_(tasks), transportationVehicles_(transportationVehicles) {}
@@ -45,7 +45,7 @@ class Solution {
   void clearTasks() { tasks_.clear(); }
   void buildTasks(const ProblemInstance& problem);
 
-  private:
+private:
   std::vector<CollectionVehicle> collectionRoutes_;
   std::vector<Task> tasks_;
   std::vector<TransportationVehicle> transportationVehicles_;

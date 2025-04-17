@@ -19,20 +19,21 @@
 #include <string>
 
 class Vehicle {
-  protected:
-    std::string id;
-    double capacity;
-    double currentLoad;
-    double maxRouteDuration;
-  public:
-    Vehicle(std::string id, double capacity, double maxRouteDuration);
-    virtual bool canAcceptLoad(double wasteAmount) = 0;
-    virtual void addLoad(double wasteAmount) = 0;
-    virtual void clearLoad() = 0;
-    std::string getId();
-    double getCapacity();
-    double getCurrentLoad();
-    double getMaxRouteDuration();
+public:
+  Vehicle(std::string id, double capacity, double maxRouteDuration);
+  virtual bool canAcceptLoad(double wasteAmount) = 0;
+  virtual void addLoad(double wasteAmount) = 0;
+  virtual void clearLoad() = 0;
+  std::string getId();
+  double getCapacity();
+  double getCurrentLoad();
+  double getMaxRouteDuration();
+
+protected:
+  std::string id_;
+  double capacity;
+  double currentLoad;
+  double maxRouteDuration;
 };
 
 

@@ -7,12 +7,12 @@
 
 class ReinsertIntra : public LocalSearch {
 public:
-    // Constructor
-    ReinsertIntra(ProblemInstance& problemInstance, Solution& solution)
-        : LocalSearch(problemInstance, solution) {}
+  // Constructor
+  ReinsertIntra(ProblemInstance& problemInstance, Solution& solution)
+      : LocalSearch(problemInstance, solution) {}
 
-    // Método para ejecutar la búsqueda local
-    void runLocalSearch() override;
+  // Método para ejecutar la búsqueda local
+  void runLocalSearch() override;
     
 };
 
