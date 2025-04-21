@@ -1,16 +1,13 @@
-// TransferStation
-
-// Represents waste transfer stations (SWTS)
-// Attributes:
-
-// id: Unique identifier
-// location: Geographical coordinates
-// currentWasteLoad: Current waste stored
-// maxCapacity: Maximum storage capacity
-// Methods:
-
-// void receiveWaste(double wasteAmount)
-// double transferWaste()
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 
 #ifndef TRANSFER
 #define TRANSFER

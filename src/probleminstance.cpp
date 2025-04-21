@@ -1,12 +1,18 @@
-
-
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 #include "include/probleminstance.h"
 #include "include/instanceparser.h"
-
-
 #include <iostream>
 #include <string>
-
+#include <cmath> // For sqrt
 
 // Constructor
 ProblemInstance::ProblemInstance(std::string filename) {
@@ -45,8 +51,6 @@ ProblemInstance::ProblemInstance(std::string filename) {
   // Initialize the distance matrix
   initializeDistanceMatrix();
 }
-
-#include <cmath> // For sqrt
 
 // Method to initialize the distance matrix
 void ProblemInstance::initializeDistanceMatrix() {
@@ -95,8 +99,6 @@ void ProblemInstance::initializeDistanceMatrix() {
       }
     }
   }
-    
-
   // std::cout << "Distance matrix initialized with " << distanceMatrix_.size() << " locations" << std::endl;
   // std::cout << "Depot (ID -1) is at index " << mapLocationIdToIndex(-1) << std::endl;
   // if (!zones_.empty())

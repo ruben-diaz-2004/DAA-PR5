@@ -1,14 +1,13 @@
-// Task
-
-// Represents a transportation task
-// Attributes:
-
-// wasteAmount: Amount of waste to transport
-// transferStation: Station where waste is collected
-// arrivalTime: Time of collection
-// Methods:
-
-// Getters for attributes
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 
 #ifndef TASK_H
 #define TASK_H

@@ -5,8 +5,8 @@
   * Computabilidad y Algoritmia 2023-2024
   *
   * @author Rubén Díaz Marrero 
-  * @date 19/02/2024
-  * @brief Juego de la vida
+  * @date 25/03/2025
+  * @brief 
   */
  
 #ifndef PARAMETERS_H
@@ -36,9 +36,17 @@ parameters parse_args(int argc, char* argv[]) {
       if (it + 1 != end) {
         options.graspN = std::stoi(*++it);
       }
-      // if (it + 1 != end && isdigit((*++it)[0])) {
-      //   options.iterations = std::stoi(*it);
-      // }
+    } else if (*it == "-i") {
+      if (it + 1 != end) {
+        options.iterations = std::stoi(*++it);
+      }
+    } else if (*it == "-help") {
+      std::cout << "Usage: " << argv[0] << " <input_file> [-greedy | -grasp <n>] [-iterations <n>]" << std::endl;
+      std::cout << "Options:" << std::endl;
+      std::cout << "  -greedy: Use greedy algorithm" << std::endl;
+      std::cout << "  -grasp <n>: Use GRASP algorithm with n candidates" << std::endl;
+      std::cout << "  -iterations <n>: Number of iterations for GRASP (default: 1000)" << std::endl;
+      exit(0);
     } else {
       std::cerr << "Error: invalid argument " << *it << std::endl;
       std::cerr << "Usage: " << argv[0] << " <input_file> [-greedy | -grasp <n>]" << std::endl;

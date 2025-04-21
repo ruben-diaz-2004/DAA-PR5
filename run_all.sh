@@ -19,8 +19,9 @@ for file in instances/*; do
     echo "Procesando $file..."
     
     # Ejecutar el programa con los parámetros adecuados
-    output=$(./bin/daa-prs "$file" $ALGORITHM)
-    
+    #output=$(./bin/daa-prs "$file" $ALGORITHM)
+    output=$(./bin/daa-prs "$file")
+
     # Extraer la línea de resultado (la que comienza con RESULTADO)
     result_line=$(echo "$output" | grep "^RESULTADO")
     

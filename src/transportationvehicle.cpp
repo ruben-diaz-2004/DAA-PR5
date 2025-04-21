@@ -1,3 +1,13 @@
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 #include "include/transportationvehicle.h"
 #include "include/task.h"
 #include <algorithm>
@@ -94,11 +104,9 @@ void TransportationVehicle::addTask(const Task& task) {
   if (!canAcceptTask(task)) {
       throw std::runtime_error("Cannot accept task");
   }
-  
   // Calcular el tiempo de viaje desde la ubicación actual hasta la estación de transferencia de la tarea
   double travelTime = currentLocation.distanceTo(task.getTransferStation().getLocation()) / vehicleTravelSpeed * 60;
   // std::cout << "Travel time to task: " << travelTime << " minutes" << std::endl;
-  
   // Actualizar el tiempo restante
   remainingTime -= travelTime; // Tiempo para llegar a la tarea
   if (!assignedTasks.empty()) {
@@ -106,10 +114,8 @@ void TransportationVehicle::addTask(const Task& task) {
   }
   // Añadir la tarea a la lista de tareas asignadas
   assignedTasks.push_back(task);
-  
   // Actualizar la ubicación actual y la ruta
   addLocation(task.getTransferStation().getLocation());
-  
   // Actualizar la carga actual
   addLoad(task.getWasteAmount());
   // std::cout << "Time remaining after adding task: " << remainingTime << " minutes" << std::endl;
@@ -125,13 +131,10 @@ void TransportationVehicle::addLocation(const Location& location) {
 void TransportationVehicle::returnToLandfill(const Location& landfillLocation) {
   // Calcular el tiempo de viaje desde la ubicación actual hasta el vertedero
   double travelTime = currentLocation.distanceTo(landfillLocation) / vehicleTravelSpeed * 60;
-  
   // Actualizar el tiempo restante
   remainingTime -= travelTime;
-  
   // Añadir el vertedero a la ruta
   addLocation(landfillLocation);
-  
   // Vaciar la carga
   clearLoad();
 }

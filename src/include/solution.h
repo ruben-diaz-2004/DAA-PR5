@@ -26,6 +26,9 @@ public:
     for (const auto& vehicle : collectionRoutes_) {
       totalTime += (480 - vehicle.getRemainingTime());
     }
+    for (const auto& vehicle : transportationVehicles_) {
+      totalTime += (480 - vehicle.getRemainingTime());
+    }
     return totalTime;
   }
 

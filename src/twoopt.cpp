@@ -1,3 +1,13 @@
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 #include "include/twoopt.h"
 #include <algorithm>
 #include <iostream>
@@ -12,10 +22,8 @@ void TwoOpt::runLocalSearch() {
 
   while (improvementFound) {
     improvementFound = false;
-    
     for (size_t routeIndex = 0; routeIndex < routes.size(); routeIndex++) {
         std::vector<Location> currentRoute = routes[routeIndex].getRoute();
-        
         // Para cada par de aristas no adyacentes en la ruta
         // Nota: i y j representan las posiciones donde cortaremos
         for (size_t i = 1; i < currentRoute.size() - 2; i++) {
@@ -24,14 +32,12 @@ void TwoOpt::runLocalSearch() {
             if (!isZone(currentRoute[i]) || !isZone(currentRoute[j])) {
               continue;
             }
-            
             // Creamos una nueva ruta aplicando 2-opt:
             // 1. Mantener las posiciones 0 a i-1
             // 2. Invertir las posiciones i a j
             // 3. Mantener las posiciones j+1 hasta el final
             std::vector<Location> newRoute = currentRoute;
             std::reverse(newRoute.begin() + i, newRoute.begin() + j + 1);
-            
             // Evaluamos la nueva ruta
             double timeUsed = 0.0;
             double finalLoad = 0.0;
@@ -40,7 +46,6 @@ void TwoOpt::runLocalSearch() {
               double oldTimeUsed = 0.0;
               double oldFinalLoad = 0.0;
               evaluateRoute(currentRoute, oldTimeUsed, oldFinalLoad);
-              
               // Si es mejor (por al menos el umbral), actualizamos la solución
               double improvement = oldTimeUsed - timeUsed;
               if (improvement > IMPROVEMENT_THRESHOLD) {
@@ -52,7 +57,6 @@ void TwoOpt::runLocalSearch() {
                 routes[routeIndex].subtractRemainingTime(-improvement);
                 routes[routeIndex].resetLoad();
                 routes[routeIndex].addLoad(finalLoad);
-                
                 improvementFound = true;
                 break;
               }
@@ -69,7 +73,6 @@ void TwoOpt::runLocalSearch() {
       }
     }
   }
-  
   // Actualizamos la solución con las nuevas rutas
   solution.setCollectionRoutes(routes);
 }

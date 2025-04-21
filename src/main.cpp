@@ -1,3 +1,13 @@
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 #include <iostream>
 #include <string>
 #include <cmath>
@@ -26,17 +36,13 @@ int main(int argc, char* argv[]) {
     std::cerr << "Usage: " << argv[0] << " <input_file> [-greedy | -grasp <n>]" << std::endl;
     return 1;
   }
-
   parameters options = parse_args(argc, argv);
   ProblemInstance instance(argv[1]);
   Solution solution = Solution();
-  
   // Para medir el tiempo de CPU
   auto start_time = std::chrono::high_resolution_clock::now();
-  
   int num_vehicles = 0;
   double total_time = 0.0;
-
   switch (options.algorithm) {
     case 1: {
       std::cout << "Greedy algorithm selected." << std::endl;
@@ -66,16 +72,6 @@ int main(int argc, char* argv[]) {
       total_time = solution.getTotalTime();
       std::cout << "RVND algorithm completed." << std::endl;
       std::cout << "Total time after RVND: " << total_time << std::endl;
-
-      // Print the route
-      std::cout << "Greedy route: ";
-      for (const auto& vehicle : solution.getCollectionRoutes()) {
-        std::cout << "Vehicle ID: " << vehicle.getId() << "Remaining time:" << vehicle.getRemainingTime() << ", Route: ";
-        for (const auto& loc : vehicle.getRoute()) {
-          std::cout << loc.getId() << " ";
-        }
-        std::cout << std::endl;
-      }
       break;
     }
     case 2: {
@@ -118,20 +114,27 @@ int main(int argc, char* argv[]) {
       return 1;
     }
   }
-  
   // Calcular tiempo de CPU
   auto end_time = std::chrono::high_resolution_clock::now();
   double cpu_time = std::chrono::duration<double>(end_time - start_time).count();
-  
   // Extraer el nombre del archivo de la ruta completa
   std::string filename = argv[1];
   size_t last_slash = filename.find_last_of("/\\");
   if (last_slash != std::string::npos) {
     filename = filename.substr(last_slash + 1);
   }
-  
   // Imprimir resultados en formato uniforme para facilitar el procesamiento posterior
   std::cout << "RESULTADO," << filename << "," << num_vehicles << "," << total_time << "," << cpu_time << std::endl;
+
+  // Print the route
+  std::cout << "Greedy route: ";
+  for (const auto& vehicle : solution.getCollectionRoutes()) {
+    std::cout << "Vehicle ID: " << vehicle.getId() << "Remaining time:" << vehicle.getRemainingTime() << ", Route: ";
+    for (const auto& loc : vehicle.getRoute()) {
+      std::cout << loc.getId() << " ";
+    }
+    std::cout << std::endl;
+  }
 
   // Imprimir las tareas guardadas en solution
   // solution.buildTasks(instance);

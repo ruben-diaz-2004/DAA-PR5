@@ -1,3 +1,13 @@
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 #include "include/swapintra.h"
 #include <algorithm>
 #include <iostream>
@@ -14,21 +24,17 @@ void SwapIntra::runLocalSearch() {
 
   while (improvementFound) {
     improvementFound = false;
-    
     for (size_t routeIndex = 0; routeIndex < routes.size(); routeIndex++) {
       std::vector<Location> currentRoute = routes[routeIndex].getRoute();
-      
       // For each pair of consecutive locations in the route (excluding depot and last location)
       for (size_t i = 1; i < currentRoute.size() - 2; i++) {
         // Skip if either location is not a zone
         if (!isZone(currentRoute[i]) || !isZone(currentRoute[i+1])) {
             continue;
         }
-        
         // Create a new route with swapped zones
         std::vector<Location> newRoute = currentRoute;
         std::swap(newRoute[i], newRoute[i+1]);
-        
         // Evaluate the new route
         double timeUsed = 0.0;
         double finalLoad = 0.0;
@@ -37,7 +43,6 @@ void SwapIntra::runLocalSearch() {
           double oldTimeUsed = 0.0;
           double oldFinalLoad = 0.0;
           evaluateRoute(currentRoute, oldTimeUsed, oldFinalLoad);
-          
           // If better (by at least the threshold), update the solution
           double improvement = oldTimeUsed - timeUsed;
           if (improvement > IMPROVEMENT_THRESHOLD) {
@@ -61,9 +66,7 @@ void SwapIntra::runLocalSearch() {
             routes[routeIndex].resetLoad();
             routes[routeIndex].addLoad(finalLoad);
             // std::cout << routes[routeIndex].getRemainingTime() << std::endl;
-            
             improvementFound = true;
-
             break;
           }
         }

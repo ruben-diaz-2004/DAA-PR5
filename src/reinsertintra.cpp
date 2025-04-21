@@ -1,3 +1,13 @@
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 #include "include/reinsertintra.h"
 #include <algorithm>
 #include <iostream>
@@ -12,10 +22,8 @@ void ReinsertIntra::runLocalSearch() {
 
   while (improvementFound) {
     improvementFound = false;
-
     for (size_t routeIndex = 0; routeIndex < routes.size(); routeIndex++) {
       std::vector<Location> currentRoute = routes[routeIndex].getRoute();
-
       // Recorremos los elementos (omitiendo el primer y último, asumiendo que son el depósito)
       // Nota: se asume que la posición 0 y la última son fijas (depósito o fin de ruta)
       for (size_t i = 1; i < currentRoute.size() - 1; i++) {
@@ -23,7 +31,6 @@ void ReinsertIntra::runLocalSearch() {
         if (!isZone(currentRoute[i]) || !isZone(currentRoute[i-1])) {
           continue;
         }
-
         // Intentar reinsertar el elemento en cada posición anterior (por delante)
         for (size_t j = 1; j < i; j++) {
           std::vector<Location> newRoute = currentRoute;
@@ -32,7 +39,6 @@ void ReinsertIntra::runLocalSearch() {
           newRoute.erase(newRoute.begin() + i);
           // Lo reinsertamos en la posición j (j < i)
           newRoute.insert(newRoute.begin() + j, elem);
-
           // Evaluamos la nueva ruta
           double timeUsed = 0.0;
           double finalLoad = 0.0;
@@ -41,7 +47,6 @@ void ReinsertIntra::runLocalSearch() {
             double oldTimeUsed = 0.0;
             double oldFinalLoad = 0.0;
             evaluateRoute(currentRoute, oldTimeUsed, oldFinalLoad);
-
             double improvement = oldTimeUsed - timeUsed;
             if (improvement > IMPROVEMENT_THRESHOLD) {
               // std::cout << "ReinsertIntra Improvement found! Old route time: " << oldTimeUsed 

@@ -1,14 +1,13 @@
-// TransportationVehicle (Inherits from Vehicle)
-
-// Represents large transportation vehicles (TV)
-// Additional attributes:
-
-// currentRoute: Vector of transfer stations and landfill
-// Methods:
-
-// bool canAcceptTask(Task task)
-// void addTaskToRoute(Task task)
-// void returnToLandfill()
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 
 #ifndef TRANSPORTATION_VEHICLE_H
 #define TRANSPORTATION_VEHICLE_H

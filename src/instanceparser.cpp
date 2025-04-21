@@ -1,3 +1,13 @@
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 #include "include/instanceparser.h"
 #include <iostream>
 
@@ -6,11 +16,9 @@ void ProblemInstanceParser::loadFromFile(const std::string& filename) {
   if (!file.is_open()) {
       throw std::runtime_error("Could not open file: " + filename);
   }
-
   // Clear any existing data
   transferStations.clear();
   zones.clear();
-
   // Parse file sections
   parseHeader(file);
   parseLocations(file);
@@ -24,13 +32,10 @@ void ProblemInstanceParser::parseHeader(std::ifstream& file) {
   std::string key;
   double value;
   bool end = false;
-
   while (std::getline(file, line)) {
     std::istringstream iss(line);
-      
     // Skip empty or comment lines
     if (line.empty() || line[0] == '/' || line[0] == '#') continue;
-
     // Parse key-value pairs
     if (iss >> key >> value) {
       if (key == "L1") maxCollectionRouteDuration = value;
@@ -44,7 +49,6 @@ void ProblemInstanceParser::parseHeader(std::ifstream& file) {
         end = true;
       }
     }
-
     // Stop parsing header when we encounter a numeric line (zone data)
     if (end) {
       file.seekg(std::streampos(file.tellg()));
@@ -57,10 +61,8 @@ void ProblemInstanceParser::parseLocations(std::ifstream& file) {
   std::string line;
   std::string key;
   double x, y;
-
   while (std::getline(file, line)) {
     std::istringstream iss(line);
-
     // Parse location lines
     if (iss >> key >> x >> y) {
       if (key == "Depot") {
@@ -75,7 +77,6 @@ void ProblemInstanceParser::parseLocations(std::ifstream& file) {
       else if (key == "Dumpsite") {
         landfill = Landfill(0, Location(x, y, -1));
       }
-
       // Stop parsing locations when we encounter a numeric line (zone data)
       if (std::isdigit(line[0])) {
         file.seekg(static_cast<std::streamoff>(file.tellg()) - static_cast<std::streamoff>(line.length()) - 1);
@@ -90,13 +91,10 @@ void ProblemInstanceParser::parseZones(std::ifstream& file) {
   int zoneId;
   double x, y, d1, d2;
   int zoneCount = 0;
-
   while (std::getline(file, line)) {
     std::istringstream iss(line);
-    
     // Skip empty or comment lines
     if (line.empty() || line[0] == '/' || line[0] == '#') continue;
-
     // Parse zone data
     if (iss >> zoneId >> x >> y >> d1 >> d2) {
       // Zone demand is calculated as (D2 - D1)

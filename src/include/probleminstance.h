@@ -1,26 +1,18 @@
-// ProblemInstance
-
-// Manages the entire problem setup
-// Attributes:
-
-// zones: List of collection zones
-// collectionVehicles: Available collection vehicles
-// transportationVehicles: Available transportation vehicles
-// transferStations: List of transfer stations
-// depot: Starting point
-// landfill: Waste destination
-// Methods:
-
-// void loadFromFile(string filename)
-// void solve()
-// void printResults()
-
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 25/03/2025
+  * @brief VRPT-SWTS
+  */
 #ifndef PROBLEMINSTANCE_H
 #define PROBLEMINSTANCE_H
 
 #include <string>
 #include <vector>
-#include <memory>
 #include "zone.h"
 #include "collectionvehicle.h"
 #include "transportationvehicle.h"
