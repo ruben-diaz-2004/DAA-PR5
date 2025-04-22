@@ -14,12 +14,12 @@ RESULTS_FILE="$RESULTS_DIR/resultados.csv"
 echo "Instancia,Vehículos,Tiempo Total,Tiempo CPU" > $RESULTS_FILE
 
 # Ejecutar el programa para cada archivo en la carpeta instances
-for file in instances/*; do
+for file in newInstances/*; do
   if [ -f "$file" ]; then
     echo "Procesando $file..."
     
     # Ejecutar el programa con los parámetros adecuados
-    #output=$(./bin/daa-prs "$file" $ALGORITHM)
+    # output=$(./bin/daa-prs "$file" $ALGORITHM)
     output=$(./bin/daa-prs "$file")
 
     # Extraer la línea de resultado (la que comienza con RESULTADO)

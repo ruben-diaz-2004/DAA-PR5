@@ -20,7 +20,7 @@
 struct parameters {
   int algorithm = 3;     // 0: no algorithm selected, 1: greedy, 2: grasp
   int graspN = 3;        // Default value for graspN (candidatos)
-  int iterations = 1000;  // Default number of GRASP iterations
+  int iterations = 100;  // Default number of GRASP iterations
 };
 
 parameters parse_args(int argc, char* argv[]) {

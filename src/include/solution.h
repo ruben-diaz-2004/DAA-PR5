@@ -26,6 +26,14 @@ public:
     for (const auto& vehicle : collectionRoutes_) {
       totalTime += (480 - vehicle.getRemainingTime());
     }
+    // for (const auto& vehicle : transportationVehicles_) {
+    //   totalTime += (480 - vehicle.getRemainingTime());
+    // }
+    return totalTime;
+  }
+
+  double getTransportationVehiclesTime() const {
+    double totalTime = 0.0;
     for (const auto& vehicle : transportationVehicles_) {
       totalTime += (480 - vehicle.getRemainingTime());
     }
@@ -37,6 +45,8 @@ public:
   const std::vector<TransportationVehicle>& getTransportationVehicles() const { return transportationVehicles_; }
   const std::vector<Task>& getTasks() const { return tasks_; }
   int getNumVehicles() const { return collectionRoutes_.size() + transportationVehicles_.size(); }
+  int getNumCollectionVehicles() const { return collectionRoutes_.size(); }
+  int getNumTransportationVehicles() const { return transportationVehicles_.size(); }
   // Setters
   void setCollectionRoutes(const std::vector<CollectionVehicle>& collectionRoutes) { collectionRoutes_ = collectionRoutes; }
   void setTransportationVehicles(const std::vector<TransportationVehicle>& vehicles) { transportationVehicles_ = vehicles; }

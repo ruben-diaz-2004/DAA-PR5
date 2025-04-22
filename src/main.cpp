@@ -52,6 +52,13 @@ int main(int argc, char* argv[]) {
       total_time = solution.getTotalTime();
       std::cout << "Greedy algorithm completed." << std::endl;
       std::cout << "Total time after greedy: " << total_time << std::endl;
+
+      // Calcular las rutas de transporte
+      TransportRouteSolver transportSolver(instance, solution);
+      std::vector<TransportationVehicle> transportRoutes = transportSolver.constructTransportRoutes();
+      std::cout << "Total transport routes: " << transportRoutes.size() << std::endl;
+      solution.setTransportationVehicles(transportRoutes);
+
       // std::cout << "Local search algorithm selected." << std::endl;
       // ReinsertIntra intra(instance, solution);
       // intra.runLocalSearch();
@@ -66,12 +73,12 @@ int main(int argc, char* argv[]) {
       // std::cout << "Local search completed." << std::endl;
       // std::cout << "Total time after local search: " << total_time << std::endl;
 
-      RVND rvnd(instance, solution);
-      rvnd.RunVND();
-      num_vehicles = solution.getNumVehicles();
-      total_time = solution.getTotalTime();
-      std::cout << "RVND algorithm completed." << std::endl;
-      std::cout << "Total time after RVND: " << total_time << std::endl;
+      // RVND rvnd(instance, solution);
+      // rvnd.RunVND();
+      // num_vehicles = solution.getNumVehicles();
+      // total_time = solution.getTotalTime();
+      // std::cout << "RVND algorithm completed." << std::endl;
+      // std::cout << "Total time after RVND: " << total_time << std::endl;
       break;
     }
     case 2: {
@@ -125,6 +132,8 @@ int main(int argc, char* argv[]) {
   }
   // Imprimir resultados en formato uniforme para facilitar el procesamiento posterior
   std::cout << "RESULTADO," << filename << "," << num_vehicles << "," << total_time << "," << cpu_time << std::endl;
+
+  std::cout << "Transport time: " << solution.getTransportationVehiclesTime() << std::endl;
 
   // Print the route
   std::cout << "Greedy route: ";

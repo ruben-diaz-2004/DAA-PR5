@@ -30,7 +30,7 @@ void MultiStart::run() {
     // Run RVND on the new solution
     RVND rvnd(instance, solution);
     rvnd.RunVND();
-    solution.buildTasks(instance);
+    // solution.buildTasks(instance);
     // Run the transport route solver
     TransportRouteSolver transportSolver(instance, solution);
     solution.setTransportationVehicles(transportSolver.constructTransportRoutes());
@@ -48,7 +48,7 @@ void MultiStart::run() {
         noImprovementCounter++; // Increment the counter
     }
     // Print the current iteration results
-    std::cout << "Iteration " << i + 1 << ": " << "Vehicles: " << numVehicles << ", Total Time: " << totalTime 
+    std::cout << "Iteration " << i + 1 << ": " << "CV: " << numVehicles << "TV: " << solution.getNumTransportationVehicles() << ", Total Time: " << totalTime 
               << ", Best Cost: " << bestCost << ", Best Vehicles: " << bestNumVehicles  << std::endl;
   }
 }
